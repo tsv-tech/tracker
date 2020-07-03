@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="cpProjects"
+             mc:Ignorable="d"
+             x:Class="tracker.Views.ProjectsListPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New"
+                 Order="Primary"
+                 Priority="0"
+                 Command="{Binding CreateProjectCommand}"/>
+        <ToolbarItem Text="Clear ALL"
+                 Order="Primary"
+                 Priority="1"
+                 Command="{Binding GetProjectsCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                   IsVisible="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                                   Color="OrangeRed"/>
+                <ListView ItemsSource="{Binding Projects}"
+                  HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="15"  RowSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.ColumnSpan="2"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding Name}"/>
+                                <Label Grid.ColumnSpan="2"
+                                       Grid.Row="1"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding GetDate}"/>
+                                <Label Grid.ColumnSpan="2"
+                                       Grid.Row="2"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding GetTime}"
+                                       FontSize="Title"/>
+                                <Button Grid.Row="4"
+                                        
+                                        Text="Start" 
+                                        Command="{Binding StartCommand}"/>
+                                <Button Grid.Row="4"
+                                        Grid.Column="1"
+                                        Text="Stop"
+                                        Command="{Binding StopCommand}"/>
+                                <Button Grid.Row="5"
+                                        Text="Manage"
+                                        Command="{Binding Path=BindingContext.ManageProjectCommand, Source={x:Reference cpProjects}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button Grid.Row="5"
+                                        Grid.Column="1"
+                                        Text="Send"
+                                        Command="{Binding StopCommand}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

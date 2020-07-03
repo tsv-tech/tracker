@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="tracker.Views.ViewProjectPage"
+             x:Name="cpViewProject"
+             Title="Details">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                 Order="Primary"
+                 Priority="0"
+                 Clicked="barSaveClicked"
+                     />
+        <ToolbarItem Text="Delete"
+                 Order="Primary"
+                 Priority="1"
+                 Clicked="barDeleteClicked"
+                     />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            
+            <Grid RowSpacing="10" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Text="Name: "/>
+                <Label Grid.Row="1" Text="Author: "/>
+                <Label Grid.Row="2" Text="Custom ID: "/>
+                <Label Grid.Row="3" Text="Date Created: "/>
+                <Label Grid.Row="4" Text="Total TIme: "/>
+                <Label Grid.Row="5" Text="Payment: "/>
+                <Label Grid.Row="6" Text="Total Price: "/>
+                <Label Grid.Row="7" Text="Comment: "/>
+
+                <Entry Grid.Row="0" Grid.Column="2" Text="{Binding Name}"/>
+                <Entry Grid.Row="1" Grid.Column="2" Text="{Binding Author}"/>
+                <Entry Grid.Row="2" Grid.Column="2" Text="{Binding CustomId}"/>
+                    <DatePicker Grid.Row="3" Grid.Column="2" Date="{Binding DateCreated}"/>
+                <TimePicker Grid.Row="4" Grid.Column="2" Time="{Binding Time}"/>
+                <Entry Grid.Row="5" Grid.Column="2" Text="{Binding Payment}"/>
+                <Label Grid.Row="6" Grid.Column="2" Text="{Binding GetTotalPrice}"/>
+                <Entry Grid.Row="7" Grid.Column="2" Text="{Binding Comment}"/>
+            </Grid>
+                <ListView Margin="10"
+                ItemsSource="{Binding Sessions}"
+                      HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Date}" Detail="{Binding Duration}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="tracker.Views.NewProjectPage"
+             Title="New Project">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+
+            <Entry Placeholder="Project Name" Text="{Binding Name}"/>
+            <Entry Placeholder="Author" Text="{Binding Author}"/>
+            <Entry Placeholder="Custom ID" Text="{Binding CustomId}"/>
+            <Entry Placeholder="Payment" Text="{Binding Payment}"/>
+            <Entry Placeholder="Comment" Text="{Binding Comment}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Create" Clicked="btnCreateClicked"/>
+                <Button Grid.Column="1" Text="Cancel" Clicked="btnCancelClicked"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
