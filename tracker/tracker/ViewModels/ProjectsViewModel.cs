@@ -26,11 +26,10 @@ namespace tracker.ViewModels
             }
             Projects.AddRange(newRange);
 
-            //GetProjectsCommand = new MvvmHelpers.Commands.Command(GetList);
             GetProjectsCommand = new MvvmHelpers.Commands.Command(ClearTable);
             CreateProjectCommand = new MvvmHelpers.Commands.Command(CreateProject);
             ManageProjectCommand = new MvvmHelpers.Commands.Command(ManageProject);
-            SendProjectCommand = new MvvmHelpers.Commands.Command(SendProject);
+            EditTimeCommand = new MvvmHelpers.Commands.Command(EditTime);
 
             MessagingCenter.Subscribe<Project>(this, "MsgSaveProject", (project) =>
             {
@@ -44,7 +43,7 @@ namespace tracker.ViewModels
             });
             MessagingCenter.Subscribe<Project>(this, "MsgDeleteProject", (project) =>
             {
-                //App.DBProjects.DeleteItem(project.Id);
+                App.DBProjects.DeleteItem(project.Id);
                 IsBusy = true;
                 Task.Delay(1000).ContinueWith(t =>
                 {
@@ -54,6 +53,11 @@ namespace tracker.ViewModels
                 });
                 IsBusy = false;
             });
+
+            MessagingCenter.Subscribe<Project>(this, "EditTimeMessage", (project) =>
+            {
+                ExecuteUpdateTime(project);
+            });
         }
 
         public INavigation Navigation { get; set; }
@@ -61,8 +65,7 @@ namespace tracker.ViewModels
         public MvvmHelpers.Commands.Command GetProjectsCommand { get; }
         public MvvmHelpers.Commands.Command CreateProjectCommand { get; }
         public MvvmHelpers.Commands.Command ManageProjectCommand { get; }
-        public MvvmHelpers.Commands.Command SendProjectCommand { get; }
-
+        public MvvmHelpers.Commands.Command EditTimeCommand {get;}
 
         public void GetList()
         {
@@ -82,26 +85,17 @@ namespace tracker.ViewModels
 
         public async void CreateProject()
         {
-            /*
-            Project input = await CreateDialog.InputBox(this.Navigation, null); //pass Project = null if creating new
-            if (input != null)
-            {
-                Projects.Add(input);
-                App.DBProjects.SaveItem(input);
-            }*/
             await Navigation.PushAsync(new NewProjectPage(new Project()));
         }
 
         public async void ManageProject(object parameter)
         {
             var tempProject = new Project(parameter as Project);
-
             await Navigation.PushAsync(new ViewProjectPage(tempProject));
         }
 
         public void ExecuteUpdateProject(Project project)
         {
-            //int index;
             foreach (var p in Projects)
                 if (p.Id == project.Id)
                 {
@@ -118,9 +112,21 @@ namespace tracker.ViewModels
             App.DBProjects.SaveItem(project);
         }
 
-        public async void SendProject()
+        public void ExecuteUpdateTime(Project project)
         {
+            foreach (var p in Projects)
+                if (p.Id == project.Id)
+                {
+                    p.Time = project.Time;
+                    break;
+                }
+            App.DBProjects.SaveItem(project);
+        }
 
+        public async void EditTime(object parameter)
+        {
+            var tempProject = new Project(parameter as Project);
+            await Navigation.PushAsync(new EditTimePage(tempProject));
         }
     }
 }

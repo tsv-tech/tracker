@@ -53,9 +53,13 @@
                 <Entry Grid.Row="1" Grid.Column="2" Text="{Binding Author}"/>
                 <Entry Grid.Row="2" Grid.Column="2" Text="{Binding CustomId}"/>
                     <DatePicker Grid.Row="3" Grid.Column="2" Date="{Binding DateCreated}"/>
-                <TimePicker Grid.Row="4" Grid.Column="2" Time="{Binding Time}"/>
+                <Entry Grid.Row="4" Grid.Column="2"
+                       IsReadOnly="True"
+                       Text="{Binding GetTime}"/>
                 <Entry Grid.Row="5" Grid.Column="2" Text="{Binding Payment}"/>
-                <Label Grid.Row="6" Grid.Column="2" Text="{Binding GetTotalPrice}"/>
+                <Entry Grid.Row="6" Grid.Column="2" 
+                       IsReadOnly="True"
+                       Text="{Binding GetTotalPrice}"/>
                 <Entry Grid.Row="7" Grid.Column="2" Text="{Binding Comment}"/>
             </Grid>
                 <ListView Margin="10"

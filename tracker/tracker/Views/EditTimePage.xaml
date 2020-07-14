@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="tracker.Views.EditTimePage"
+             Title="Edit Time">
+    
+    <ContentPage.Content>
+        <Grid Padding="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Entry Grid.ColumnSpan="2"
+                Placeholder="Hours" 
+                   Keyboard="Numeric"
+                   Text="{Binding Hours}"/>
+            <Entry Grid.Row="1" Grid.ColumnSpan="2"
+                   Placeholder="Minutes" 
+                   Keyboard="Numeric"
+                   Text="{Binding Minutes}"/>
+            <Button Grid.Row="2" Grid.Column="0" 
+                    Text="Apply"
+                    Clicked="btnApplyClicked"/>
+            <Button Grid.Row="2" Grid.Column="1" 
+                    Text="Cancel"
+                    Clicked="btCancelClicked"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -94,7 +94,10 @@ namespace tracker.Models
         [Ignore]
         public string GetTime
         {
-            get { return "Timer is " + (IsRunning? " ON ":"OFF ") +  Time.ToString(@"hh\:mm\:ss"); }
+            get { return string.Format("{0}:{1:mm}:{1:ss}",
+                     (int)Time.TotalHours,
+                     Time);
+            }
         }
 
         string customId;
