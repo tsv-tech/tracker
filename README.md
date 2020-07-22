@@ -5,7 +5,7 @@ App for Tracking time spent on your projects with 'hot' launch - literally just 
 
 Download .apk file and  
 
-###OR
+### OR
 
 make .apk archive by yourself using VS2019
 
@@ -17,9 +17,6 @@ install manually to your device with 'developer mode'
 
 ## Authors
 
-* **avacodehub** - *Initial work* - [PurpleBooth](https://github.com/avacodehub)
+* **avacodehub** - [github](https://github.com/avacodehub)
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
