@@ -9,8 +9,16 @@ namespace tracker
 {
     public partial class App : Application
     {
+        /* Глобальные переменные (Variables), которые мы используем на уровне всего приложения
+         место храненеие базы данных*/
+
         public const string PROJECTS_FILE = "projects.db";
         public const string SESSIONS_FILE = "sessions.db";
+        //public const string SERVER_URL = "https://jsonplaceholder.typicode.com/todos/1";
+
+        /*  */
+        public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/getItem?customId=id1";
+        public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/postItem";
         public static Repository dbProjects;
         public static Repository DBProjects
         {
@@ -20,7 +28,8 @@ namespace tracker
                 {
                     dbProjects = new Repository(
                         Path.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PROJECTS_FILE));
+                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                            , PROJECTS_FILE));
                 }
                 return dbProjects;
             }

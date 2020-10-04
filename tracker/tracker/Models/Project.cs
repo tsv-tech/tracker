@@ -11,9 +11,14 @@ using Xamarin.Forms;
 
 namespace tracker.Models
 {
+    /* Задает "формат" данных (data), который будет использоваться в приложении, в данном случае единицей данных будет "Проект" 
+     с полями, которые хранят конкретную информацию */
+
     [Table("Projects")]
     public class Project : ObservableObject
     {
+        //Конструкторы "проекта" для различных ситуаций 
+        //  (первое создание объекта / передача на страницу для изменений / инициализаия списка при запуске приложения / отправка на сервер ...)
         
         public Project(string Name, string Author, string CustomId, string Payment, string Comment)
         {
@@ -49,6 +54,8 @@ namespace tracker.Models
             StopCommand = new Command(StopTimer);
         }
 
+        /* команды представляют функцию, к которой можно присоединить button*/
+
         public ICommand StartCommand { get; }
         public ICommand StopCommand { get; }
 
@@ -56,6 +63,9 @@ namespace tracker.Models
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
+
+        /* Каждое поле имеет 2 переменные (variable): "name" хранит значение, "Name" реализует чтение/запись этого значения 
+         при этом дополнительно "оповещает" о том, что значение изменилось*/
 
         string name;
         public string Name
@@ -83,7 +93,7 @@ namespace tracker.Models
             get { return time; }
             set
             {
-                //SetProperty(ref time, value);
+                
                 if (value == time)
                     return;
                 time = value;
@@ -91,6 +101,7 @@ namespace tracker.Models
             }
         }
 
+        /* Специальная функция для передачи на View времени в удобном для пользователя формате */
         [Ignore]
         public string GetTime
         {
@@ -134,6 +145,8 @@ namespace tracker.Models
                 OnPropertyChanged(nameof(GetDate));
             }
         }
+
+        /* Специальная функция для передачи на View даты в удобном для пользователя формате */
         [Ignore]
         public string GetDate
         {
@@ -162,6 +175,7 @@ namespace tracker.Models
             }
         }
 
+        /* Специальная функция для передачи на View цены в удобном для пользователя формате */
         [Ignore]
         public string GetTotalPrice
         {

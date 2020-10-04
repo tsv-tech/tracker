@@ -12,6 +12,7 @@
             <Entry Placeholder="Project Name" Text="{Binding Name}"/>
             <Entry Placeholder="Author" Text="{Binding Author}"/>
             <Entry Placeholder="Custom ID" Text="{Binding CustomId}"/>
+            <Label Text="Payment" />
             <Entry Placeholder="Payment" Text="{Binding Payment}"/>
             <Entry Placeholder="Comment" Text="{Binding Comment}"/>
             <Grid>

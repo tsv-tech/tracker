@@ -9,6 +9,10 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="GET"
+                 Order="Primary"
+                 Priority="0"
+                 Command="{Binding GetRequestCommand}"/>
         <ToolbarItem Text="New"
                  Order="Primary"
                  Priority="0"
