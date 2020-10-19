@@ -13,12 +13,11 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="TimeAPP" FontSize="Large"/>
-            <Entry Text="12:33:50"/>
-            <Label Text="New Application" FontSize="Large"/>
-            <Entry Text="00:15:11"/>
-            <Label Text="Custom Project" FontSize="Large"/>
-            <Entry Text="02:03:50"/>
+            <Entry x:Name="entCustomId" Text="" Placeholder="Enter Custom ID here..."/>
+            <Label x:Name="entTime" Text="" FontSize="Large"/>
+
+            <Button Text="Get Info" Clicked="FetchProject"/>
+            <Button Text="Clear" Clicked="ClearClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

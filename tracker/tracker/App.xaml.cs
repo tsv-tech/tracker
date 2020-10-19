@@ -17,8 +17,8 @@ namespace tracker
         //public const string SERVER_URL = "https://jsonplaceholder.typicode.com/todos/1";
 
         /*  */
-        public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/getItem?customId=id1";
-        public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/postItem";
+        public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
+        public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/create";
         public static Repository dbProjects;
         public static Repository DBProjects
         {

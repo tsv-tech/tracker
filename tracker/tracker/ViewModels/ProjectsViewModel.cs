@@ -39,7 +39,6 @@ namespace tracker.ViewModels
              ей будут переданы, например для создания нового проекта будет совершен переход на новую страницу с 
             пустым проектом*/
 
-            GetProjectsCommand = new MvvmHelpers.Commands.Command(ClearTable);
             CreateProjectCommand = new MvvmHelpers.Commands.Command(CreateProject);
             ManageProjectCommand = new MvvmHelpers.Commands.Command(ManageProject);
             EditTimeCommand = new MvvmHelpers.Commands.Command(EditTime);
@@ -76,46 +75,11 @@ namespace tracker.ViewModels
 
         public INavigation Navigation { get; set; }
         public ObservableRangeCollection<Project> Projects { get; set; }
-        public MvvmHelpers.Commands.Command GetProjectsCommand { get; }
         public MvvmHelpers.Commands.Command CreateProjectCommand { get; }
         public MvvmHelpers.Commands.Command ManageProjectCommand { get; }
         public MvvmHelpers.Commands.Command EditTimeCommand { get; }
         public MvvmHelpers.Commands.Command GetRequestCommand { get; }
 
-        public void GetList()
-        {
-            var projects = new ObservableRangeCollection<Project> {
-                new Project("PRJ 1", "AUTH 1", "ID 1", "25", "COMMENT 1"),
-                new Project("PRJ 2", "AUTH 2", "ID 2", "25", "COMMENT 2")
-                };
-
-            Projects.AddRange(projects);
-        }
-
-        public async void GetFromServer()
-        {
-            var item = await GetRequest();
-            if (item == null)
-                return;
-            var localProject = new Project(item["name"], item["time"], item["customId"], "55", "comment");
-            Projects.Add(localProject);
-        }
-
-        public async Task<Dictionary<string, string>> GetRequest()
-        {
-            HttpClient client = new HttpClient();
-            Uri uri = new Uri(string.Format(App.SERVER_URL, string.Empty));
-
-            HttpResponseMessage response = await client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                var item = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-                return item;
-            }
-            else { return null; }
-
-        }
 
         public async void PostToServer()
         {

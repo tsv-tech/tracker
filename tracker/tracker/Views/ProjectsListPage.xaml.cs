@@ -16,13 +16,18 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            this.BindingContext = new ProjectsViewModel() { Navigation = this.Navigation };
+            BindingContext = new ProjectsViewModel() { Navigation = this.Navigation };
             MessagingCenter.Subscribe<Page>(this, "DiscardChanges", (project) =>
             {
                 DisplayAlert("Title", "Message", "OK");
                 //App.DBProjects.SaveItem(tempProject);
                 //MessagingCenter.Unsubscribe<ProjectViewModel>(this, "DiscardChanges");
             });
+        }
+
+        private async void WatchOther(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new WatchPage());
         }
     }
 }
