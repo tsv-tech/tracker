@@ -14,11 +14,10 @@ namespace tracker
 
         public const string PROJECTS_FILE = "projects.db";
         public const string SESSIONS_FILE = "sessions.db";
-        //public const string SERVER_URL = "https://jsonplaceholder.typicode.com/todos/1";
 
-        /*  */
         public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
-        public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/create";
+        public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/upsert";
+
         public static Repository dbProjects;
         public static Repository DBProjects
         {

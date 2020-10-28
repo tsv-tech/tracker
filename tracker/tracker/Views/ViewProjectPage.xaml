@@ -21,9 +21,8 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-            
+        <StackLayout>
+
             <Grid RowSpacing="10" Padding="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -52,7 +51,7 @@
                 <Entry Grid.Row="0" Grid.Column="2" Text="{Binding Name}"/>
                 <Entry Grid.Row="1" Grid.Column="2" Text="{Binding Author}"/>
                 <Entry Grid.Row="2" Grid.Column="2" Text="{Binding CustomId}"/>
-                    <DatePicker Grid.Row="3" Grid.Column="2" Date="{Binding DateCreated}"/>
+                <DatePicker Grid.Row="3" Grid.Column="2" Date="{Binding DateCreated}"/>
                 <Entry Grid.Row="4" Grid.Column="2"
                        IsReadOnly="True"
                        Text="{Binding GetTime}"/>
@@ -62,16 +61,16 @@
                        Text="{Binding GetTotalPrice}"/>
                 <Entry Grid.Row="7" Grid.Column="2" Text="{Binding Comment}"/>
             </Grid>
-                <ListView Margin="10"
+            <Button Text="Send To Server" Clicked="btnSendClicked"/>
+            <ListView Margin="10"
                 ItemsSource="{Binding Sessions}"
                       HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Date}" Detail="{Binding Duration}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-        </ScrollView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Date}" Detail="{Binding Duration}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

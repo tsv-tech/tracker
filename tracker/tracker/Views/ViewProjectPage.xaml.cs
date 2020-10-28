@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,15 +16,6 @@ namespace tracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewProjectPage : ContentPage
     {
-        /*
-        public ProjectViewModel LocalViewModel { get; private set; }
-        public CreateProjectPage(ProjectViewModel vm)
-        {
-            InitializeComponent();
-            LocalViewModel = vm;
-            this.BindingContext = LocalViewModel;
-        }
-        */
         public Project LocalProject { get; private set; }
         public bool ItemChanged = false;
         public ViewProjectPage(Project prj)
@@ -51,7 +44,7 @@ namespace tracker.Views
         private async void barDeleteClicked(object sender, EventArgs e)
         {
             
-            bool answer = await DisplayAlert("Question?", "You are going to delete this project \n Continue?", "Yes", "No");
+            bool answer = await DisplayAlert("ALERT", "You are going to delete this project \n Continue?", "Yes", "No");
             if (answer)
             {
                 await Navigation.PopAsync();
@@ -59,6 +52,50 @@ namespace tracker.Views
                 //ListView throws exception if ItemSource is modified while being in different page
                 //Task.Delay(1000).ContinueWith(t => MessagingCenter.Send<Project>(LocalProject, "MsgDeleteProject"));
                 MessagingCenter.Send<Project>(LocalProject, "MsgDeleteProject");
+            }
+        }
+
+        private async void btnSendClicked(object sender, EventArgs e)
+        {
+            await PostToServerAsync();
+        }
+
+        public async Task PostToServerAsync(bool isNewItem = true)
+        {
+            // httpclient будет устанавливать соединение с внешним сервером
+            HttpClient client = new HttpClient();
+
+            // uri это ссылка/адрес сервера с которым будет устанавливаться соединение, генерируется из строки с адресом,
+            //которая создана в App в разделе глобальных переменных
+            Uri uri = new Uri(string.Format(App.SERVER_URL_POST, string.Empty));
+
+            Dictionary<string, string> contentRaw = new Dictionary<string, string>();
+            contentRaw.Add("customId", LocalProject.CustomId);
+            contentRaw.Add("time", LocalProject.GetTime);
+
+            //json - объект который "понимает" внешний сервер, т.е. здесь он создается из начального объекта, который
+            //приводится в нужную форму
+
+            string json = JsonConvert.SerializeObject(contentRaw, Formatting.Indented);
+            // информация о нашем json, который подскажет серверу, как правильно его прочитать и обработать
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            /* процесс установки соединения с сервером и отправки нашего json после чего сервер пришлет ответ (response)  */
+            HttpResponseMessage response = null;
+            if (isNewItem)
+            {
+                response = await client.PostAsync(uri, content);
+            }
+
+            /* проверка ответа от сервера: если все сработало - то выполняется показ страницы (данная страница тестовая, поэтому
+             * пока не обращаем внимания*/
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
             }
         }
     }

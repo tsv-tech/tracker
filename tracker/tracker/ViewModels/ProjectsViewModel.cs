@@ -6,11 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using tracker.Models;
 using tracker.Views;
-using tracker.Tools;
 using Xamarin.Forms;
-using System.Threading;
-using System.Net.Http;
-using Newtonsoft.Json;
 
 namespace tracker.ViewModels
 {
@@ -42,7 +38,6 @@ namespace tracker.ViewModels
             CreateProjectCommand = new MvvmHelpers.Commands.Command(CreateProject);
             ManageProjectCommand = new MvvmHelpers.Commands.Command(ManageProject);
             EditTimeCommand = new MvvmHelpers.Commands.Command(EditTime);
-            GetRequestCommand = new MvvmHelpers.Commands.Command(PostToServer);
 
             MessagingCenter.Subscribe<Project>(this, "MsgSaveProject", (project) =>
             {
@@ -78,47 +73,7 @@ namespace tracker.ViewModels
         public MvvmHelpers.Commands.Command CreateProjectCommand { get; }
         public MvvmHelpers.Commands.Command ManageProjectCommand { get; }
         public MvvmHelpers.Commands.Command EditTimeCommand { get; }
-        public MvvmHelpers.Commands.Command GetRequestCommand { get; }
 
-
-        public async void PostToServer()
-        {
-            await PostToServerAsync();
-        }
-
-        public async Task PostToServerAsync(bool isNewItem = true)
-        {
-            // httpclient будет устанавливать соединение с внешним сервером
-            HttpClient client = new HttpClient();
-
-            // uri это ссылка/адрес сервера с которым будет устанавливаться соединение, генерируется из строки с адресом,
-            //которая создана в App в разделе глобальных переменных
-            Uri uri = new Uri(string.Format(App.SERVER_URL_POST, string.Empty));
-
-            // localProject - начальный объект, который хранит в себе нашу информацию
-            var localProject = new ProjectLight { name = "sender", time="00:12:12", customId="sen11" };
-
-            //json - объект который "понимает" внешний сервер, т.е. здесь он создается из начального объекта, который
-            //приводится в нужную форму
-            string json = JsonConvert.SerializeObject(localProject);
-
-            // информация о нашем json, который подскажет серверу, как правильно его прочитать и обработать
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            /* процесс установки соединения с сервером и отправки нашего json после чего сервер пришлет ответ (response)  */
-            HttpResponseMessage response = null;
-            if (isNewItem)
-            {
-                response = await client.PostAsync(uri, content);
-            }
-
-            /* проверка ответа от сервера: если все сработало - то выполняется показ страницы (данная страница тестовая, поэтому
-             * пока не обращаем внимания*/
-            if (response.IsSuccessStatusCode)
-            {
-                await Navigation.PushAsync(new WatchPage());
-            }
-        }
 
         public void ClearTable()
         {
