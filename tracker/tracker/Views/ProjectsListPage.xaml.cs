@@ -16,7 +16,8 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectsViewModel() { Navigation = this.Navigation };
+            BindingContext = new ProjectsViewModel(Navigation)
+                ;
             MessagingCenter.Subscribe<Page>(this, "DiscardChanges", (project) =>
             {
                 DisplayAlert("Title", "Message", "OK");
@@ -28,6 +29,11 @@ namespace tracker.Views
         private async void WatchOther(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new WatchPage());
+        }
+
+        private async void btnSettingsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsPage());
         }
     }
 }

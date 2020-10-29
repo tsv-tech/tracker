@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="tracker.Views.AboutPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	Title="About">
+	<ContentPage.Content>
+		<StackLayout Padding="10" Spacing="10">
+			<Label Text="App created by: avacodehub and PI Engineering" />
+			<Label Text="avacodehub avacodehub@gmail.com" />
+			<Label Text="PI Engineering email@.com" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

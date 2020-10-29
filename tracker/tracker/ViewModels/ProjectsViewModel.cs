@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using tracker.Models;
 using tracker.Views;
 using Xamarin.Forms;
@@ -12,9 +13,14 @@ namespace tracker.ViewModels
 {
     public class ProjectsViewModel : BaseViewModel
     {
-        public ProjectsViewModel()
+        public INavigation Navigation { get; set; }
+        public Project ActiveProject { get; set; }
+
+        public ProjectsViewModel(INavigation navigation)
         {
+            this.Navigation = navigation;
             Title = "Projects";
+
 
             /* Коллекция хранит в себе все проекты, которые были созданы. Управление этими проектами происходит тоже
               с помощью этой коллекции*/
@@ -38,6 +44,7 @@ namespace tracker.ViewModels
             CreateProjectCommand = new MvvmHelpers.Commands.Command(CreateProject);
             ManageProjectCommand = new MvvmHelpers.Commands.Command(ManageProject);
             EditTimeCommand = new MvvmHelpers.Commands.Command(EditTime);
+            ToggleTimerCommand = new MvvmHelpers.Commands.Command(ToggleTimer);
 
             MessagingCenter.Subscribe<Project>(this, "MsgSaveProject", (project) =>
             {
@@ -68,11 +75,11 @@ namespace tracker.ViewModels
             });
         }
 
-        public INavigation Navigation { get; set; }
         public ObservableRangeCollection<Project> Projects { get; set; }
-        public MvvmHelpers.Commands.Command CreateProjectCommand { get; }
-        public MvvmHelpers.Commands.Command ManageProjectCommand { get; }
-        public MvvmHelpers.Commands.Command EditTimeCommand { get; }
+        public ICommand CreateProjectCommand { get; }
+        public ICommand ManageProjectCommand { get; }
+        public ICommand EditTimeCommand { get; }
+        public ICommand ToggleTimerCommand { get; }
 
 
         public void ClearTable()
@@ -91,6 +98,35 @@ namespace tracker.ViewModels
         {
             var tempProject = new Project(parameter as Project);
             await Navigation.PushAsync(new ViewProjectPage(tempProject));
+        }
+
+        public async void ToggleTimer(object parameter)
+        {
+            var project = parameter as Project;
+
+            if (ActiveProject == null) {
+                ActiveProject = project;
+                ActiveProject.ToggleTimer();
+                return;
+            }
+
+            if (ActiveProject == project)
+            {
+                ActiveProject.ToggleTimer();
+                ActiveProject = null;
+                return;
+            }
+            else
+            {
+                bool ans = await Application.Current.MainPage.DisplayAlert("Project Change", "You are currently working on other project\nDo you want to switch?", "Yes", "No");
+                if (ans)
+                {
+                    ActiveProject.ToggleTimer();
+                    ActiveProject = project;
+                    ActiveProject.ToggleTimer();
+                }
+                else { return; }
+            }
         }
 
         public void ExecuteUpdateProject(Project project)

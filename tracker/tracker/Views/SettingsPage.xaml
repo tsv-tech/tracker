@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="tracker.Views.SettingsPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	Title="Settings">
+	<ContentPage.Content>
+		<StackLayout>
+			<FlexLayout
+				Padding="10"
+				Direction="Row"
+				JustifyContent="SpaceBetween">
+				<Label Text="Enable multiple active projects" />
+				<Switch />
+			</FlexLayout>
+			<Button Clicked="btnAboutClicked" Text="About" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
