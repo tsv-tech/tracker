@@ -19,23 +19,9 @@ namespace tracker.Models
     {
         //Конструкторы "проекта" для различных ситуаций 
         //  (первое создание объекта / передача на страницу для изменений / инициализаия списка при запуске приложения / отправка на сервер ...)
-        
-        public Project(string Name, string Author, string CustomId, string Payment, string Comment)
-        {
-            ToggleTimerCommand = new Command(ToggleTimer);
-
-            this.Name = Name;
-            this.Author = Author;
-            this.CustomId = CustomId;
-            this.Payment = Double.Parse(Payment);
-            this.Comment = Comment;
-            DateCreated = DateTime.Now;
-        }
 
         public Project(Project p)
         {
-            ToggleTimerCommand = new Command(ToggleTimer);
-
             this.Id = p.Id;
             this.Name = p.Name;
             this.Author = p.Author;
@@ -48,12 +34,9 @@ namespace tracker.Models
         }
         public Project()
         {
-            ToggleTimerCommand = new Command(ToggleTimer);
         }
 
         /* команды представляют функцию, к которой можно присоединить button*/
-
-        public ICommand ToggleTimerCommand { get; }
 
         #region PROPERTIES
 
@@ -89,7 +72,6 @@ namespace tracker.Models
             get { return time; }
             set
             {
-                
                 if (value == time)
                     return;
                 time = value;
@@ -195,7 +177,6 @@ namespace tracker.Models
 
         #region TIMERS & SESSIONS
 
-        private DateTime SessionDateStarted;
         bool isRunning = false;
         public bool IsRunning
         {
@@ -208,34 +189,11 @@ namespace tracker.Models
                 OnPropertyChanged(nameof(GetColor));
             }
         }
-        public void ToggleTimer()
-        {
-            if (IsRunning)
-            {
-                IsRunning = false;
-                App.DBSessions.SaveItem(new Session
-                {
-                    ProjectId = this.Id,
-                    Date = SessionDateStarted.ToString(),
-                    Duration = (SessionDateStarted - DateTime.Now).ToString(@"hh\:mm\:ss")
-                });
-
-                App.DBProjects.SaveItem(this);
-                return;
-            }
-                
-            SessionDateStarted = DateTime.Now;
-            IsRunning = true;
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                Time += new TimeSpan(0, 0, 1);
-                //Time = Time.Add(new TimeSpan(0,0,1));
-                return IsRunning;
-            });
-        }
+        
 
         [Ignore]
         public string GetState { get { return !isRunning ? "Start" : "Stop"; } }
+        [Ignore]
         public string GetColor { get { return !isRunning ? "White" : "LightGreen"; } }
 
         #endregion TIMERS

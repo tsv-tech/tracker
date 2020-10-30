@@ -15,6 +15,7 @@ namespace tracker.ViewModels
     {
         public INavigation Navigation { get; set; }
         public Project ActiveProject { get; set; }
+        public DateTime SessionTimeStarted { get; set; }
 
         public ProjectsViewModel(INavigation navigation)
         {
@@ -28,12 +29,14 @@ namespace tracker.ViewModels
             Projects = new ObservableRangeCollection<Project>();
 
             var range = new List<Project>(App.DBProjects.GetItems());
-            List<Project> newRange = new List<Project>();
+            
+            /*List<Project> newRange = new List<Project>();
             foreach (var p in range)
             {
                 newRange.Add(new Project(p));
             }
-            Projects.AddRange(newRange);
+            */
+            Projects.AddRange(range);
 
 
             /* команды для управления коллекцией проектов, которые будут привязаны к кнопкам на главной странице
@@ -104,15 +107,16 @@ namespace tracker.ViewModels
         {
             var project = parameter as Project;
 
-            if (ActiveProject == null) {
+            if (ActiveProject == null)
+            {
                 ActiveProject = project;
-                ActiveProject.ToggleTimer();
+                Start(ActiveProject);
                 return;
             }
 
             if (ActiveProject == project)
             {
-                ActiveProject.ToggleTimer();
+                Stop(ActiveProject);
                 ActiveProject = null;
                 return;
             }
@@ -121,12 +125,49 @@ namespace tracker.ViewModels
                 bool ans = await Application.Current.MainPage.DisplayAlert("Project Change", "You are currently working on other project\nDo you want to switch?", "Yes", "No");
                 if (ans)
                 {
-                    ActiveProject.ToggleTimer();
+                    Stop(ActiveProject);
                     ActiveProject = project;
-                    ActiveProject.ToggleTimer();
+                    Start(ActiveProject);
                 }
                 else { return; }
             }
+        }
+
+        public void Start(Project project)
+        {
+            if (project.IsRunning)
+            {
+                return;
+            }
+            else
+            {
+                SessionTimeStarted = DateTime.Now;
+                project.IsRunning = true;
+
+                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                {
+                    project.Time += new TimeSpan(0, 0, 1);
+                    return project.IsRunning;
+                });
+            }
+        }
+
+        public void Stop(Project project)
+        {
+            if (project.IsRunning)
+            {
+                project.IsRunning = false;
+                App.DBSessions.SaveItem(new Session
+                {
+                    ProjectId = project.Id,
+                    Date = SessionTimeStarted.ToString(),
+                    Duration = (SessionTimeStarted - DateTime.Now).ToString(@"hh\:mm\:ss")
+                });
+
+                App.DBProjects.SaveItem(project);
+                return;
+            }
+            else return;
         }
 
         public void ExecuteUpdateProject(Project project)
