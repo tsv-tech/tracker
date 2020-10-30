@@ -5,10 +5,17 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	Title="About">
 	<ContentPage.Content>
-		<StackLayout Padding="10" Spacing="10">
-			<Label Text="App created by: avacodehub and PI Engineering" />
-			<Label Text="avacodehub avacodehub@gmail.com" />
-			<Label Text="PI Engineering email@.com" />
-		</StackLayout>
+		<FlexLayout
+			Padding="10"
+			Direction="Column"
+			JustifyContent="SpaceBetween">
+			<StackLayout Spacing="10">
+				<Label FontSize="Large" Text="Time Tracker" />
+				<Label FontSize="Medium" Text="App for tracking and share multiple projects. Created by avacodehub and PI.Engineering" />
+				<Label Text="avacodehub@gmail.com" />
+				<Label Text="pi.engineering.ok@gmail.com" />
+			</StackLayout>
+			<Label HorizontalTextAlignment="Center" Text="{Binding CurrentYear}" />
+		</FlexLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -12,9 +12,12 @@ namespace tracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AboutPage : ContentPage
     {
+        public string CurrentYear { get; set; }
         public AboutPage()
         {
             InitializeComponent();
+            CurrentYear = DateTime.Now.Year.ToString() + " ©";
+            this.BindingContext = this;
         }
     }
 }
