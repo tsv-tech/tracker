@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using tracker.Models;
 using tracker.Tools;
+using tracker.ViewModels;
 using tracker.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,6 +13,7 @@ namespace tracker
     {
         /* Глобальные переменные (Variables), которые мы используем на уровне всего приложения
          место храненеие базы данных*/
+        public static ProjectsViewModel PROJECTS_VM = new ProjectsViewModel();
 
         public const string PROJECTS_FILE = "projects.db";
         public const string SESSIONS_FILE = "sessions.db";
@@ -56,17 +59,23 @@ namespace tracker
 
         }
 
+        
+
+        
+
         protected override void OnStart()
         {
-
+            //ResumeActive();
         }
 
         protected override void OnSleep()
         {
+            PROJECTS_VM.StopGlobalTimer();
         }
 
         protected override void OnResume()
         {
+            PROJECTS_VM.ResumeActive();
         }
     }
 }

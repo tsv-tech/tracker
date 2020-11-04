@@ -13,23 +13,21 @@ namespace tracker.ViewModels
 {
     public class ProjectsViewModel : BaseViewModel
     {
-        public INavigation Navigation { get; set; }
-        public Project ActiveProject { get; set; }
-        public DateTime SessionTimeStarted { get; set; }
-
-        public ProjectsViewModel(INavigation navigation)
+        public List<Project> ActiveProject { get; set; }
+        public bool IsActive { get; set; }
+        public Dictionary<int, DateTime> SessionTimeStarted { get; set; }
+        public ProjectsViewModel()
         {
-            this.Navigation = navigation;
             Title = "Projects";
-
 
             /* Коллекция хранит в себе все проекты, которые были созданы. Управление этими проектами происходит тоже
               с помощью этой коллекции*/
 
             Projects = new ObservableRangeCollection<Project>();
+            ActiveProject = new List<Project>();
 
             var range = new List<Project>(App.DBProjects.GetItems());
-            
+
             /*List<Project> newRange = new List<Project>();
             foreach (var p in range)
             {
@@ -38,7 +36,7 @@ namespace tracker.ViewModels
             */
             Projects.AddRange(range);
 
-
+            RecoverGlobalTimer();
             /* команды для управления коллекцией проектов, которые будут привязаны к кнопкам на главной странице
              * каждая команда имеет свою функцию (которая указана в скобках), которая будет вызвана и исполнена с теми параметрами, которые 
              ей будут переданы, например для создания нового проекта будет совершен переход на новую страницу с 
@@ -93,44 +91,95 @@ namespace tracker.ViewModels
 
         public async void CreateProject()
         {
-            await Navigation.PushAsync(new NewProjectPage(new Project()));
+            await Application.Current.MainPage.Navigation.PushAsync(new NewProjectPage(new Project()));
         }
 
         //async - для того, чтобы пользователь продолжал работу без прерываний 
         public async void ManageProject(object parameter)
         {
             var tempProject = new Project(parameter as Project);
-            await Navigation.PushAsync(new ViewProjectPage(tempProject));
+            await Application.Current.MainPage.Navigation.PushAsync(new ViewProjectPage(tempProject));
         }
 
         public async void ToggleTimer(object parameter)
         {
             var project = parameter as Project;
 
-            if (ActiveProject == null)
-            {
-                ActiveProject = project;
-                Start(ActiveProject);
-                return;
-            }
-
-            if (ActiveProject == project)
-            {
-                Stop(ActiveProject);
-                ActiveProject = null;
-                return;
-            }
-            else
+            if (ActiveProject.Count > 0 && !project.IsRunning)
             {
                 bool ans = await Application.Current.MainPage.DisplayAlert("Project Change", "You are currently working on other project\nDo you want to switch?", "Yes", "No");
                 if (ans)
                 {
-                    Stop(ActiveProject);
-                    ActiveProject = project;
-                    Start(ActiveProject);
+                    Stop(ActiveProject[0]);
+                    ActiveProject.Clear();
                 }
                 else { return; }
             }
+
+            if (!project.IsRunning)
+            {
+                ActiveProject.Add(project);
+                Start(project);
+            }
+            else
+            {
+                try
+                {
+                    Stop(project);
+                    ActiveProject.Remove(project);
+                }
+                catch
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Failed to stop, please try again", "Ok");
+                }
+            }
+
+            if (IsActive && ActiveProject.Count == 0)
+            {
+                StopGlobalTimer();
+                return;
+            }
+
+            if (!IsActive && ActiveProject.Count > 0)
+            {
+                StartGlobalTimer();
+            }
+
+        }
+
+        public void StartGlobalTimer()
+        {
+            if (IsActive)
+                return;
+
+            IsActive = true;
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                foreach (var p in ActiveProject)
+                {
+                    p.SessionTime = DateTime.Now - p.SessionStartTime;
+                }
+                return IsActive;
+            });
+        }
+
+        public void StopGlobalTimer()
+        {
+            IsActive = false;
+        }
+
+        public void RecoverGlobalTimer()
+        {
+            ActiveProject.Clear();
+            foreach(var p in Projects)
+            {
+                if (p.IsRunning)
+                {
+                    p.SessionTime = DateTime.Now - p.SessionStartTime;
+                    ActiveProject.Add(p);
+                }
+            }
+            StartGlobalTimer();
         }
 
         public void Start(Project project)
@@ -141,33 +190,48 @@ namespace tracker.ViewModels
             }
             else
             {
-                SessionTimeStarted = DateTime.Now;
+
+                project.SessionStartTime = DateTime.Now;
+                project.SessionTime = new TimeSpan(0, 0, 0);
+
                 project.IsRunning = true;
 
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-                    project.Time += new TimeSpan(0, 0, 1);
-                    return project.IsRunning;
-                });
+                App.DBProjects.SaveItem(project);
             }
         }
 
-        public void Stop(Project project)
+        public void Stop(Project project, bool sleep = false)
         {
             if (project.IsRunning)
             {
                 project.IsRunning = false;
-                App.DBSessions.SaveItem(new Session
+
+                if (!sleep)
                 {
-                    ProjectId = project.Id,
-                    Date = SessionTimeStarted.ToString(),
-                    Duration = (SessionTimeStarted - DateTime.Now).ToString(@"hh\:mm\:ss")
-                });
+                    project.Time += project.SessionTime;
+                    App.DBSessions.SaveItem(new Session
+                    {
+                        ProjectId = project.Id,
+                        Date = project.SessionStartTime.ToString(),
+                        Duration = (DateTime.Now - project.SessionStartTime).ToString(@"hh\:mm\:ss")
+                    });
+                }
 
                 App.DBProjects.SaveItem(project);
                 return;
             }
             else return;
+        }
+
+        public void ResumeActive()
+        {
+            if (ActiveProject.Count == 0)
+                return;
+
+            foreach (var p in ActiveProject) 
+                p.SessionTime = DateTime.Now - p.SessionStartTime;
+
+            StartGlobalTimer();
         }
 
         public void ExecuteUpdateProject(Project project)
@@ -202,7 +266,7 @@ namespace tracker.ViewModels
         public async void EditTime(object parameter)
         {
             var tempProject = new Project(parameter as Project);
-            await Navigation.PushAsync(new EditTimePage(tempProject));
+            await Application.Current.MainPage.Navigation.PushAsync(new EditTimePage(tempProject));
         }
     }
 }

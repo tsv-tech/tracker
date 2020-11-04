@@ -49,7 +49,7 @@ namespace tracker.Models
         string name;
         public string Name
         {
-            get {return name;}
+            get { return name; }
             set
             {
                 SetProperty(ref name, value);
@@ -66,7 +66,7 @@ namespace tracker.Models
             }
         }
 
-        TimeSpan time = new TimeSpan(0,0,0);
+        TimeSpan time = new TimeSpan(0, 0, 0);
         public TimeSpan Time
         {
             get { return time; }
@@ -79,11 +79,34 @@ namespace tracker.Models
             }
         }
 
+        public DateTime SessionStartTime { get; set; }
+
+        TimeSpan sessionTime = new TimeSpan(0, 0, 0);
+        public TimeSpan SessionTime
+        {
+            get { return sessionTime; }
+            set
+            {
+                if (value == sessionTime)
+                    return;
+                sessionTime = value;
+                OnPropertyChanged(nameof(GetTime));
+            }
+        }
+
         /* Специальная функция для передачи на View времени в удобном для пользователя формате */
         [Ignore]
         public string GetTime
         {
-            get { return string.Format("{0}:{1:mm}:{1:ss}",
+            //get Time + SessionTime while active and just Time if not
+            get
+            {
+                if (isRunning)
+                    return string.Format("{0}:{1:mm}:{1:ss}",
+                         (int)(Time + SessionTime).TotalHours,
+                         Time + SessionTime);
+                else
+                    return string.Format("{0}:{1:mm}:{1:ss}",
                      (int)Time.TotalHours,
                      Time);
             }
@@ -157,8 +180,11 @@ namespace tracker.Models
         [Ignore]
         public string GetTotalPrice
         {
-            get { double total = Time.TotalHours * payment; 
-                return @"Total: " + total + " " + Currency; }
+            get
+            {
+                double total = Time.TotalHours * payment;
+                return @"Total: " + total + " " + Currency;
+            }
         }
         [Ignore]
         public ObservableRangeCollection<Session> Sessions
@@ -189,7 +215,7 @@ namespace tracker.Models
                 OnPropertyChanged(nameof(GetColor));
             }
         }
-        
+
 
         [Ignore]
         public string GetState { get { return !isRunning ? "Start" : "Stop"; } }

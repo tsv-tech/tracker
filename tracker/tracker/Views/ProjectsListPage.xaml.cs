@@ -16,7 +16,7 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectsViewModel(Navigation)
+            BindingContext = new ProjectsViewModel()
                 ;
             MessagingCenter.Subscribe<Page>(this, "DiscardChanges", (project) =>
             {
