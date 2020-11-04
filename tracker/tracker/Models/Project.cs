@@ -186,6 +186,7 @@ namespace tracker.Models
                 return @"Total: " + total + " " + Currency;
             }
         }
+        /*
         [Ignore]
         public ObservableRangeCollection<Session> Sessions
         {
@@ -198,7 +199,7 @@ namespace tracker.Models
                 return sessions;
             }
         }
-
+        */
         #endregion END_PROPERTIES
 
         #region TIMERS & SESSIONS
