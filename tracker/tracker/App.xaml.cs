@@ -14,8 +14,10 @@ namespace tracker
         /* Глобальные переменные (Variables), которые мы используем на уровне всего приложения
          место храненеие базы данных*/
         public static ProjectsViewModel PROJECTS_VM = new ProjectsViewModel();
+        public static WatchVM WATCH_VM = new WatchVM();
 
         public const string PROJECTS_FILE = "projects.db";
+        public const string WATCH_FILE = "watch.db";
         public const string SESSIONS_FILE = "sessions.db";
 
         public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
@@ -37,6 +39,21 @@ namespace tracker
             }
         }
 
+        public static Repository dbWatch;
+        public static Repository DBWatch
+        {
+            get
+            {
+                if (dbWatch == null)
+                {
+                    dbWatch = new Repository(
+                        Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                            , WATCH_FILE));
+                }
+                return dbWatch;
+            }
+        }
         public static RepositorySessions dbSessions;
         public static RepositorySessions DBSessions
         {
@@ -59,12 +76,12 @@ namespace tracker
 
         }
 
-        
-
-        
-
         protected override void OnStart()
         {
+            if (Application.Current.Properties.ContainsKey("watchMode"))
+            {
+                Application.Current.MainPage.Navigation.PushAsync(new WatchPage());
+            }
             //ResumeActive();
         }
 

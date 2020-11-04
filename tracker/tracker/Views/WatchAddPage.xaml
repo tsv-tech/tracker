@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="tracker.Views.WatchAddPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+	<ContentPage.Content>
+		<StackLayout>
+			<Label Text="Custom ID" />
+			<Entry Placeholder="Enter Custom ID here..." Text="{Binding CustomId}" />
+			<Label Text="Project Name" />
+			<Entry Placeholder="Enter Project Name here..." Text="{Binding Name}" />
+			<Label Text="Freelancer" />
+			<Entry Placeholder="(optional) Enter Freelancer's Name here..." Text="{Binding Author}" />
+
+			<StackLayout Orientation="Horizontal">
+				<Button Clicked="AddClicked" Text="Add" />
+				<Button Clicked="BackClicked" Text="Back" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

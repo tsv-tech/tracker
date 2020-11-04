@@ -1,23 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="tracker.Views.WatchPage"
-             Title="Watch Projects">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+"
-                 Order="Primary"
-                 Priority="0"
-                     />
-        
-    </ContentPage.ToolbarItems>
-    
-    <ContentPage.Content>
-        <StackLayout>
-            <Entry x:Name="entCustomId" Text="" Placeholder="Enter Custom ID here..."/>
-            <Label x:Name="entTime" Text="" FontSize="Large"/>
+<ContentPage
+	x:Class="tracker.Views.WatchPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Name="watchPage"
+	Title="Watch Projects">
 
-            <Button Text="Get Info" Clicked="FetchProject"/>
-            <Button Text="Clear" Clicked="ClearClicked"/>
-        </StackLayout>
-    </ContentPage.Content>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Command="{Binding WatchAddCommand}"
+			Order="Primary"
+			Priority="0"
+			Text="+" />
+
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<StackLayout>
+			<ListView
+				HasUnevenRows="True"
+				ItemsSource="{Binding WatchProjects}"
+				SeparatorVisibility="None">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<ViewCell.View>
+								<Frame
+									Margin="10"
+									BorderColor="DarkBlue"
+									CornerRadius="10"
+									HasShadow="True">
+									<StackLayout>
+										<Label Text="Project Name:" />
+										<Label FontSize="Large" Text="{Binding Name}" />
+										<Label Text="Custom ID:" />
+										<Label FontSize="Large" Text="{Binding CustomId}" />
+										<Label Text="Total Time:" />
+										<Label FontSize="Large" Text="{Binding GetTime}" />
+										<Button
+											Command="{Binding Path=BindingContext.FetchCommand, Source={x:Reference watchPage}}"
+											CommandParameter="{Binding}"
+											Text="Sync" />
+										<Button
+											Command="{Binding Path=BindingContext.WatchDeleteCommand, Source={x:Reference watchPage}}"
+											CommandParameter="{Binding}"
+											Text="Delete" />
+									</StackLayout>
+								</Frame>
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>

@@ -16,14 +16,7 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectsViewModel()
-                ;
-            MessagingCenter.Subscribe<Page>(this, "DiscardChanges", (project) =>
-            {
-                DisplayAlert("Title", "Message", "OK");
-                //App.DBProjects.SaveItem(tempProject);
-                //MessagingCenter.Unsubscribe<ProjectViewModel>(this, "DiscardChanges");
-            });
+            BindingContext = new ProjectsViewModel();
         }
 
         private async void WatchOther(object sender, EventArgs e)
