@@ -22,7 +22,7 @@
 		<ToolbarItem
 			Clicked="WatchOther"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.MenuSwapOutline},
+			                            Glyph={x:Static tools:IconFont.ApplicationImport},
 			                            Color=White,
 			                            Size=40}"
 			Order="Primary"
@@ -38,7 +38,7 @@
 		<ToolbarItem
 			Clicked="btnSettingsClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.ApplicationSettings},
+			                            Glyph={x:Static tools:IconFont.FileCogOutline},
 			                            Color=White,
 			                            Size=40}"
 			Order="Primary"
@@ -97,7 +97,7 @@
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
 												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-												                   Glyph={x:Static tools:IconFont.Alarm},
+												                   Glyph={x:Static tools:IconFont.ClockTimeEightOutline},
 												                   Color=Green,
 												                   Size=40}" />
 										</StackLayout>
