@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+	x:Class="tracker.Views.TabPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:local="clr-namespace:tracker.Views"
+	xmlns:tools="clr-namespace:tracker.Tools"
+	android:TabbedPage.BarItemColor="#66FFFFFF"
+	android:TabbedPage.BarSelectedItemColor="White"
+	android:TabbedPage.ToolbarPlacement="Bottom"
+	BarBackgroundColor="#2196F3"
+	BarTextColor="White">
+
+	<!--  TabbedPage can be underlined like errors but they are working(xamarin.forms issue  -->
+
+	<!--  Pages can be added as references or inline  -->
+	<TabbedPage.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+			</OnPlatform>
+		</ResourceDictionary>
+	</TabbedPage.Resources>
+
+	<NavigationPage Title="WORK" IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static tools:IconFont.AnimationPlay}, Color=White, Size=40}">
+		<x:Arguments>
+			<local:ProjectsListPage />
+		</x:Arguments>
+	</NavigationPage>
+
+	<NavigationPage Title="WATCH" IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static tools:IconFont.ApplicationImport}, Color=White, Size=40}">
+		<x:Arguments>
+			<local:WatchPage />
+		</x:Arguments>
+	</NavigationPage>
+</TabbedPage>

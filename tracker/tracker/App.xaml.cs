@@ -72,7 +72,8 @@ namespace tracker
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ProjectsListPage());
+            //MainPage = new NavigationPage(new ProjectsListPage());
+            MainPage = new TabPage();
 
         }
 

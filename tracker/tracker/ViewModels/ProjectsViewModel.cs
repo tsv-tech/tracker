@@ -42,6 +42,7 @@ namespace tracker.ViewModels
              ей будут переданы, например для создания нового проекта будет совершен переход на новую страницу с 
             пустым проектом*/
 
+
             CreateProjectCommand = new MvvmHelpers.Commands.Command(CreateProject);
             ManageProjectCommand = new MvvmHelpers.Commands.Command(ManageProject);
             EditTimeCommand = new MvvmHelpers.Commands.Command(EditTime);
@@ -76,6 +77,7 @@ namespace tracker.ViewModels
             });
         }
 
+        public INavigation Navigation;
         public ObservableRangeCollection<Project> Projects { get; set; }
         public ICommand CreateProjectCommand { get; }
         public ICommand ManageProjectCommand { get; }
@@ -91,14 +93,14 @@ namespace tracker.ViewModels
 
         public async void CreateProject()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new NewProjectPage(new Project()));
+            await Navigation.PushAsync(new NewProjectPage(new Project()));
         }
 
         //async - для того, чтобы пользователь продолжал работу без прерываний 
         public async void ManageProject(object parameter)
         {
             var tempProject = new Project(parameter as Project);
-            await Application.Current.MainPage.Navigation.PushAsync(new ViewProjectPage(tempProject));
+            await Navigation.PushAsync(new ViewProjectPage(tempProject));
         }
 
         public async void ToggleTimer(object parameter)
@@ -266,7 +268,7 @@ namespace tracker.ViewModels
         public async void EditTime(object parameter)
         {
             var tempProject = new Project(parameter as Project);
-            await Application.Current.MainPage.Navigation.PushAsync(new EditTimePage(tempProject));
+            await Navigation.PushAsync(new EditTimePage(tempProject));
         }
     }
 }

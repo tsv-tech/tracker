@@ -16,12 +16,8 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectsViewModel();
-        }
-
-        private async void WatchOther(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new WatchPage());
+            BindingContext = App.PROJECTS_VM;
+            App.PROJECTS_VM.Navigation = this.Navigation;
         }
 
         private async void btnSettingsClicked(object sender, EventArgs e)

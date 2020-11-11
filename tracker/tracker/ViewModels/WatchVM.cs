@@ -32,7 +32,7 @@ namespace tracker.ViewModels
             FetchCommand = new Command(Fetch);
 
             WatchAddCommand = new Command(async () => { 
-                await Application.Current.MainPage.Navigation.PushAsync(new WatchAddPage(new Project())); 
+                await Navigation.PushAsync(new WatchAddPage(new Project())); 
             });
 
             WatchDeleteCommand = new Command((object parameter) =>
@@ -42,6 +42,8 @@ namespace tracker.ViewModels
                 App.DBWatch.DeleteItem(project.Id);
             });
         }
+
+        public INavigation Navigation;
         public ObservableRangeCollection<Project> WatchProjects { get; set; }
 
         public ICommand FetchCommand { get; }

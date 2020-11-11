@@ -20,14 +20,6 @@
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Clicked="WatchOther"
-			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.ApplicationImport},
-			                            Color=White,
-			                            Size=40}"
-			Order="Primary"
-			Priority="0" />
-		<ToolbarItem
 			Command="{Binding CreateProjectCommand}"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
 			                            Glyph={x:Static tools:IconFont.Plus},
