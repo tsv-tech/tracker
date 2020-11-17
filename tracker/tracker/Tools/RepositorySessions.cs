@@ -40,5 +40,10 @@ namespace tracker.Tools
                 return database.Insert(item);
             }
         }
+
+        public void ClearTable()
+        {
+            database.DeleteAll<Session>();
+        }
     }
 }

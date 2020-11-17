@@ -186,6 +186,16 @@ namespace tracker.Models
                 return @"Total: " + total.ToString("F") + " " + Currency;
             }
         }
+
+        bool isBusy = false;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                SetProperty(ref isBusy, value);
+            }
+        }
         /*
         [Ignore]
         public ObservableRangeCollection<Session> Sessions

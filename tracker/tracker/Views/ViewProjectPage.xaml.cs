@@ -62,6 +62,9 @@ namespace tracker.Views
 
         public async Task PostToServerAsync(bool isNewItem = true)
         {
+            fetchLabel.Text = "";
+            fetchIndicator.IsRunning = true;
+            fetchIndicator.IsVisible = true;
             // httpclient будет устанавливать соединение с внешним сервером
             HttpClient client = new HttpClient();
 
@@ -71,7 +74,7 @@ namespace tracker.Views
 
             Dictionary<string, string> contentRaw = new Dictionary<string, string>();
             contentRaw.Add("customId", LocalProject.CustomId);
-            contentRaw.Add("time", LocalProject.GetTime);
+            contentRaw.Add("time", LocalProject.Time.ToString());
 
             //json - объект который "понимает" внешний сервер, т.е. здесь он создается из начального объекта, который
             //приводится в нужную форму
@@ -87,16 +90,22 @@ namespace tracker.Views
                 response = await client.PostAsync(uri, content);
             }
 
+            fetchIndicator.IsRunning = false;
+            fetchIndicator.IsVisible = false;
             /* проверка ответа от сервера: если все сработало - то выполняется показ страницы (данная страница тестовая, поэтому
              * пока не обращаем внимания*/
+            
             if (response.IsSuccessStatusCode)
             {
-                await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
+                fetchLabel.Text = "Sent!";
+                //await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
             }
             else
             {
-                await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
+                fetchLabel.Text = "Error!";
+                //await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
             }
+            
         }
     }
 }

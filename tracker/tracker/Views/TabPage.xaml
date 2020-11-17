@@ -12,7 +12,7 @@
 	BarBackgroundColor="#2196F3"
 	BarTextColor="White">
 
-	<!--  TabbedPage can be underlined like errors but they are working(xamarin.forms issue  -->
+	<!--  TabbedPage can be underlined like errors (xamarin.forms issue  -->
 
 	<!--  Pages can be added as references or inline  -->
 	<TabbedPage.Resources>

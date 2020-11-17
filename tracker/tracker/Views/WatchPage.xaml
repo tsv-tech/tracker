@@ -3,16 +3,27 @@
 	x:Class="tracker.Views.WatchPage"
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:tools="clr-namespace:tracker.Tools"
 	x:Name="watchPage"
 	Title="Watch Projects">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+			</OnPlatform>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Command="{Binding WatchAddCommand}"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.Plus},
+			                            Color=White,
+			                            Size=40}"
 			Order="Primary"
-			Priority="0"
-			Text="+" />
-
+			Priority="0" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -27,24 +38,56 @@
 							<ViewCell.View>
 								<Frame
 									Margin="10"
+									BackgroundColor="#F1F2F7"
 									BorderColor="DarkBlue"
 									CornerRadius="10"
 									HasShadow="True">
 									<StackLayout>
+										<StackLayout Orientation="Horizontal">
+											<StackLayout>
+												<Label Text="Custom ID:" />
+												<Label
+													FontSize="Small"
+													Text="{Binding CustomId}"
+													TextColor="Black" />
+											</StackLayout>
+											<ImageButton
+												BackgroundColor="Transparent"
+												Command="{Binding Path=BindingContext.WatchDeleteCommand, Source={x:Reference watchPage}}"
+												CommandParameter="{Binding}"
+												HorizontalOptions="EndAndExpand"
+												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+												                   Glyph={x:Static tools:IconFont.DeleteOutline},
+												                   Color=Black,
+												                   Size=40}" />
+
+										</StackLayout>
 										<Label Text="Project Name:" />
-										<Label FontSize="Large" Text="{Binding Name}" />
-										<Label Text="Custom ID:" />
-										<Label FontSize="Large" Text="{Binding CustomId}" />
+										<Label
+											FontSize="Large"
+											Text="{Binding Name}"
+											TextColor="Black" />
+
 										<Label Text="Total Time:" />
-										<Label FontSize="Large" Text="{Binding GetTime}" />
-										<Button
-											Command="{Binding Path=BindingContext.FetchCommand, Source={x:Reference watchPage}}"
-											CommandParameter="{Binding}"
-											Text="Sync" />
-										<Button
-											Command="{Binding Path=BindingContext.WatchDeleteCommand, Source={x:Reference watchPage}}"
-											CommandParameter="{Binding}"
-											Text="Delete" />
+										<StackLayout Orientation="Horizontal">
+											<Label
+												FontSize="40"
+												Text="{Binding GetTime}"
+												TextColor="Black" />
+											<ActivityIndicator
+												HorizontalOptions="Center"
+												IsRunning="{Binding IsBusy}"
+												IsVisible="{Binding IsBusy}" />
+											<Button
+												BackgroundColor="White"
+												BorderColor="Blue"
+												BorderWidth="2"
+												Command="{Binding Path=BindingContext.FetchCommand, Source={x:Reference watchPage}}"
+												CommandParameter="{Binding}"
+												CornerRadius="10"
+												HorizontalOptions="EndAndExpand"
+												Text="Sync" />
+										</StackLayout>
 									</StackLayout>
 								</Frame>
 							</ViewCell.View>

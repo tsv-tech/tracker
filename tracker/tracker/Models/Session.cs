@@ -11,8 +11,9 @@ namespace tracker.Models
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public string Date { get; set; }
-        public string Duration { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public Session()
         {

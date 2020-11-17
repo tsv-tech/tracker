@@ -5,20 +5,36 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:tools="clr-namespace:tracker.Tools"
 	x:Name="cpViewProject"
 	Title="Details"
 	mc:Ignorable="d">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+			</OnPlatform>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Clicked="barSaveClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},
+			                            Color=White,
+			                            Size=40}"
 			Order="Primary"
-			Priority="0"
-			Text="Save" />
+			Priority="0" />
 		<ToolbarItem
 			Clicked="barDeleteClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.DeleteOutline},
+			                            Color=White,
+			                            Size=40}"
 			Order="Primary"
-			Priority="1"
-			Text="Delete" />
+			Priority="0" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -84,7 +100,16 @@
 					Grid.Column="2"
 					Text="{Binding Comment}" />
 			</Grid>
-			<Button Clicked="btnSendClicked" Text="Send To Server" />
+			<StackLayout Padding="10" Orientation="Horizontal">
+				<Button Clicked="btnSendClicked" Text="Send To Server" />
+				<ActivityIndicator x:Name="fetchIndicator" IsRunning="false" />
+				<Label
+					x:Name="fetchLabel"
+					Margin="10,0"
+					FontSize="Large"
+					Text=""
+					VerticalOptions="Center" />
+			</StackLayout>
 			<!--<ListView Margin="10"
                 ItemsSource="{Binding Sessions}"
                       HasUnevenRows="True">

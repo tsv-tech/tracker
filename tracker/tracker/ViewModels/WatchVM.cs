@@ -35,12 +35,7 @@ namespace tracker.ViewModels
                 await Navigation.PushAsync(new WatchAddPage(new Project())); 
             });
 
-            WatchDeleteCommand = new Command((object parameter) =>
-            {
-                var project = parameter as Project;
-                WatchProjects.Remove(project);
-                App.DBWatch.DeleteItem(project.Id);
-            });
+            WatchDeleteCommand = new Command(Delete);
         }
 
         public INavigation Navigation;
@@ -49,6 +44,18 @@ namespace tracker.ViewModels
         public ICommand FetchCommand { get; }
         public ICommand WatchAddCommand { get; }
         public ICommand WatchDeleteCommand { get; }
+
+        private async void Delete(object parameter)
+        {
+            bool answer = await Application.Current.MainPage.DisplayAlert("ALERT", "You are going to delete this project \n Continue?", "Yes", "No");
+            if (!answer)
+            {
+                return;
+            }
+            var project = parameter as Project;
+            WatchProjects.Remove(project);
+            App.DBWatch.DeleteItem(project.Id);
+        }
 
         private async void Fetch(object parameter)
         {
@@ -59,7 +66,7 @@ namespace tracker.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID must be at least 1 character long", "OK");
                 return;
             }
-
+            project.IsBusy = true;
             var item = await FetchProjectTask(project);
             if (item == null)
             {
@@ -70,12 +77,12 @@ namespace tracker.ViewModels
             {
                 project.Time = TimeSpan.Parse(item["time"]);
             }
-            catch {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid Time format", "OK");
+            catch (Exception e) {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid Time format " + e.Message, "OK");
             }
 
             App.DBWatch.SaveItem(project);
-
+            project.IsBusy = false;
         }
         public async Task<Dictionary<string, string>> FetchProjectTask(Project project)
         {
