@@ -21,6 +21,12 @@ namespace tracker.ViewModels
             var range = new List<Project>(App.DBWatch.GetItems());
             WatchProjects.AddRange(range);
 
+            //fixes indicators when page loads 1st time
+            foreach (var p in WatchProjects)
+            {
+                p.IsBusy = false;
+            }
+
             MessagingCenter.Subscribe<Project>(this, "MsgAddWatchProject", (project) =>
             {
                 App.DBWatch.SaveItem(project);
