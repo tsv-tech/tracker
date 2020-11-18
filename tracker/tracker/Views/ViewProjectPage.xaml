@@ -20,6 +20,14 @@
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
+			Clicked="barShareClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.ShareVariantOutline},
+			                            Color=White,
+			                            Size=40}"
+			Order="Primary"
+			Priority="0" />
+		<ToolbarItem
 			Clicked="barSaveClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
 			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},
@@ -56,7 +64,7 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Label Grid.Row="0" Text="Name: " />
+				<Label Grid.Row="0" Text="Project Name: " />
 				<Label Grid.Row="1" Text="Author: " />
 				<Label Grid.Row="2" Text="Custom ID: " />
 				<Label Grid.Row="3" Text="Date Created: " />

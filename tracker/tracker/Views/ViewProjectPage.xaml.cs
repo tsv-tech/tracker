@@ -10,6 +10,7 @@ using tracker.Models;
 using tracker.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace tracker.Views
 {
@@ -106,6 +107,20 @@ namespace tracker.Views
                 //await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
             }
             
+        }
+
+        public async Task ShareText()
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = LocalProject.CustomId + "\nYou can use this ID in Time App to track total time. ",
+                Title = "Share Project"
+            });
+        }
+
+        private async void barShareClicked(object sender, EventArgs e)
+        {
+            await ShareText();
         }
     }
 }
