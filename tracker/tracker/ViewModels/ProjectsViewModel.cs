@@ -104,6 +104,14 @@ namespace tracker.ViewModels
             await Navigation.PushAsync(new ViewProjectPage(tempProject));
         }
 
+        private void MoveProjectToTop(Project prj)
+        {
+            int oldIndex = Projects.IndexOf(prj);
+            Projects.Move(oldIndex, 0);
+
+            MessagingCenter.Send<Project>(prj, "MsgScrollToProject");
+        }
+
         public async void ToggleTimer(object parameter)
         {
             var project = parameter as Project;
@@ -123,6 +131,7 @@ namespace tracker.ViewModels
             {
                 ActiveProject.Add(project);
                 Start(project);
+                MoveProjectToTop(project);
             }
             else
             {
@@ -183,6 +192,7 @@ namespace tracker.ViewModels
                 }
             }
             StartGlobalTimer();
+            MoveProjectToTop(ActiveProject[0]);
         }
 
         public void Start(Project project)

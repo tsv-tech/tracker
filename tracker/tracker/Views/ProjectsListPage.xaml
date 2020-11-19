@@ -40,7 +40,10 @@
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout>
-				<ListView HasUnevenRows="True" ItemsSource="{Binding Projects}">
+				<ListView
+					x:Name="ProjectsListView"
+					HasUnevenRows="True"
+					ItemsSource="{Binding Projects}">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>

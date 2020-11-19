@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using tracker.ViewModels;
+using tracker.Models;
 
 namespace tracker.Views
 {
@@ -18,11 +19,17 @@ namespace tracker.Views
             InitializeComponent();
             BindingContext = App.PROJECTS_VM;
             App.PROJECTS_VM.Navigation = this.Navigation;
+
+            MessagingCenter.Subscribe<Project>(this, "MsgScrollToProject", (project) =>
+            {
+                ProjectsListView.ScrollTo(project, ScrollToPosition.MakeVisible, true);
+            });
         }
 
         private async void btnSettingsClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsPage());
         }
+
     }
 }
