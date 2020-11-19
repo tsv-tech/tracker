@@ -77,6 +77,7 @@ namespace tracker.ViewModels
             if (item == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "ID does not exist", "OK");
+                project.IsBusy = false;
                 return;
             }
             try
