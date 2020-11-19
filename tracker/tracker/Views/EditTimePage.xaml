@@ -14,6 +14,7 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
 			<Grid.ColumnDefinitions>
@@ -37,14 +38,20 @@
 				Keyboard="Numeric"
 				Placeholder="Minutes"
 				Text="{Binding Minutes, StringFormat='{0:D2}'}" />
-
-			<Button
+			<Label
+				x:Name="errMinutes"
 				Grid.Row="2"
+				Grid.Column="1"
+				IsVisible="false"
+				Text="Minuts must be 0 - 59"
+				TextColor="Red" />
+			<Button
+				Grid.Row="3"
 				Grid.Column="0"
 				Clicked="btnApplyClicked"
 				Text="Apply" />
 			<Button
-				Grid.Row="2"
+				Grid.Row="3"
 				Grid.Column="1"
 				Clicked="btCancelClicked"
 				Text="Cancel" />
