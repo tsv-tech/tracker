@@ -51,6 +51,7 @@ namespace tracker.ViewModels
             MessagingCenter.Subscribe<Project>(this, "MsgSaveProject", (project) =>
             {
                 ExecuteUpdateProject(project);
+                Application.Current.MainPage.DisplayAlert("Info", "Changes Saved!", "OK");
             });
 
             MessagingCenter.Subscribe<Project>(this, "MsgCreateProject", (project) =>
