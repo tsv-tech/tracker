@@ -7,8 +7,20 @@
 		<StackLayout Padding="10">
 			<Label Text="Custom ID" />
 			<Entry Placeholder="Enter Custom ID here..." Text="{Binding CustomId}" />
+			<Label
+				x:Name="errorCustomId"
+				Margin="6,-10,0,10"
+				IsVisible="false"
+				Text="Custom ID is required"
+				TextColor="Red" />
 			<Label Text="Project Name" />
 			<Entry Placeholder="Enter Project Name here..." Text="{Binding Name}" />
+			<Label
+				x:Name="errorProjectName"
+				Margin="6,-10,0,10"
+				IsVisible="false"
+				Text="Project Name is required"
+				TextColor="Red" />
 			<Label Text="Freelancer" />
 			<Entry Placeholder="(optional) Enter Freelancer's Name here..." Text="{Binding Author}" />
 

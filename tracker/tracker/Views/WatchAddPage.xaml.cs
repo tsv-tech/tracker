@@ -23,6 +23,11 @@ namespace tracker.Views
 
         private void AddClicked(object sender, EventArgs e)
         {
+            if (ValidationError())
+            {
+                return;
+            }
+
             Navigation.PopAsync();
             try
             {
@@ -37,6 +42,26 @@ namespace tracker.Views
         private async void BackClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+        private bool ValidationError ()
+        {
+            bool error = false;
+
+            errorCustomId.IsVisible = false;
+            errorProjectName.IsVisible = false;
+            
+            if (string.IsNullOrEmpty(LocalProject.CustomId))
+            {
+                error = true;
+                errorCustomId.IsVisible = true;
+            }
+            if (string.IsNullOrEmpty(LocalProject.Name))
+            {
+                error = true;
+                errorProjectName.IsVisible = true;
+            }
+            return error;
         }
     }
 }
