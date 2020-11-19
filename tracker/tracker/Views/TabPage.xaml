@@ -9,8 +9,8 @@
 	android:TabbedPage.BarItemColor="#66FFFFFF"
 	android:TabbedPage.BarSelectedItemColor="White"
 	android:TabbedPage.ToolbarPlacement="Bottom"
-	BarBackgroundColor="#2196F3"
-	BarTextColor="White">
+	BarBackgroundColor="{StaticResource Key=primary-back-title-color}"
+	BarTextColor="{StaticResource Key=primary-title-color}">
 
 	<!--  TabbedPage can be underlined like errors (xamarin.forms issue  -->
 

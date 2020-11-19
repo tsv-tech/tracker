@@ -38,7 +38,7 @@
 							<ViewCell.View>
 								<Frame
 									Margin="10"
-									BackgroundColor="#F1F2F7"
+									BackgroundColor="{StaticResource Key=frame-secondary-color}"
 									BorderColor="DarkBlue"
 									CornerRadius="10"
 									HasShadow="True">

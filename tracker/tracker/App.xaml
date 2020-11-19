@@ -11,6 +11,24 @@
 			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
 				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
 			</OnPlatform>
+			<!--  Pallete  -->
+			<Color x:Key="primary-back-title-color">#6200ee</Color>
+			<Color x:Key="primary-title-color">#FFFFFF</Color>
+
+			<Color x:Key="background-main-color">#FFFFFF</Color>
+			<Color x:Key="frame-main-color">#EAE7DC</Color>
+			<Color x:Key="frame-secondary-color">#F9E7DA</Color>
+			<Color x:Key="primary-color">#6200ee</Color>
+			<Color x:Key="primary-variant-color">#3700b3</Color>
+			<Color x:Key="secondary-color">#03dac5</Color>
+			<Color x:Key="text-primary-color">#000</Color>
+			<Color x:Key="text-secondary-color">#000</Color>
+
+			<!--  Pallete-end  -->
+			<Style ApplyToDerivedTypes="true" TargetType="NavigationPage">
+				<Setter Property="BarBackgroundColor" Value="{StaticResource Key=primary-back-title-color}" />
+				<Setter Property="BarTextColor" Value="{StaticResource Key=primary-title-color}" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

@@ -45,9 +45,9 @@
 						<DataTemplate>
 							<ViewCell>
 								<Frame
-									Margin="10"
-									BackgroundColor="#F1F2F7"
-									BorderColor="DarkBlue"
+									Margin="10,10,10,0"
+									BackgroundColor="{StaticResource Key=frame-main-color}"
+									BorderColor="{StaticResource Key=primary-variant-color}"
 									CornerRadius="10"
 									HasShadow="True">
 									<StackLayout>
@@ -56,13 +56,13 @@
 										<Label
 											FontSize="30"
 											Text="{Binding Name}"
-											TextColor="Black" />
+											TextColor="{StaticResource Key=text-primary-color}" />
 										<Label Margin="0,10,0,0" Text="Time Spent" />
 										<StackLayout Orientation="Horizontal" Spacing="15">
 											<Label
 												FontSize="40"
 												Text="{Binding GetTime}"
-												TextColor="Black" />
+												TextColor="{StaticResource Key=text-primary-color}" />
 											<ImageButton
 												BackgroundColor="Transparent"
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
@@ -70,7 +70,7 @@
 												HorizontalOptions="EndAndExpand"
 												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
 												                   Glyph={x:Static tools:IconFont.ClockTimeEightOutline},
-												                   Color=Black,
+												                   Color={StaticResource Key=primary-variant-color},
 												                   Size=40}" />
 											<ImageButton
 												BackgroundColor="Transparent"
@@ -78,13 +78,13 @@
 												CommandParameter="{Binding}"
 												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
 												                   Glyph={x:Static tools:IconFont.FileDocumentEditOutline},
-												                   Color=Black,
+												                   Color={StaticResource Key=primary-variant-color},
 												                   Size=40}" />
 										</StackLayout>
 
 										<Button
 											BackgroundColor="{Binding GetColor}"
-											BorderColor="Blue"
+											BorderColor="{StaticResource Key=primary-variant-color}"
 											BorderWidth="2"
 											Command="{Binding Path=BindingContext.ToggleTimerCommand, Source={x:Reference cpProjects}}"
 											CommandParameter="{Binding}"
