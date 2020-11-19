@@ -234,5 +234,52 @@ namespace tracker.Models
         public string GetColor { get { return !isRunning ? "White" : "LightGreen"; } }
 
         #endregion TIMERS
+
+        #region Other
+        DateTime lastSyncDate = DateTime.Now;
+        public DateTime LastSyncDate
+        {
+            get { return lastSyncDate; }
+            set
+            {
+                //SetProperty(ref dateCreated, value);
+                if (value == lastSyncDate)
+                    return;
+                lastSyncDate = value;
+                OnPropertyChanged(nameof(LastSyncDate));
+                OnPropertyChanged(nameof(GetLastSyncDate));
+            }
+        }
+
+        TimeSpan lastSyncTime = new TimeSpan(0, 0, 0);
+        public TimeSpan LastSyncTime
+        {
+            get { return lastSyncTime; }
+            set
+            {
+                if (value == lastSyncTime)
+                    return;
+                lastSyncTime = value;
+                OnPropertyChanged(nameof(LastSyncTime));
+                OnPropertyChanged(nameof(GetLastSyncTime));
+            }
+        }
+        [Ignore]
+        public string GetLastSyncDate
+        {
+            get { return LastSyncDate.ToString("dd.MM.yyyy HH:mm:ss"); }
+        }
+        [Ignore]
+        public string GetLastSyncTime
+        {
+            get
+            {
+                
+                    return string.Format("{0}h {1:mm}m {1:ss}s",
+                     (int)Time.TotalHours,
+                     Time);
+            }
+        }
+        #endregion
     }
 }

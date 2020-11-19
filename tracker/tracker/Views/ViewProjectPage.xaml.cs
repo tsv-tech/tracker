@@ -99,6 +99,8 @@ namespace tracker.Views
             if (response.IsSuccessStatusCode)
             {
                 fetchLabel.Text = "Sent!";
+                LocalProject.LastSyncDate = DateTime.Now;
+                LocalProject.LastSyncTime = LocalProject.Time;
                 //await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
             }
             else

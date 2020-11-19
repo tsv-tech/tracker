@@ -109,7 +109,10 @@
 					Text="{Binding Comment}" />
 			</Grid>
 			<StackLayout Padding="10" Orientation="Horizontal">
-				<Button Clicked="btnSendClicked" Text="Send To Server" />
+				<Button
+					Clicked="btnSendClicked"
+					Text="Send To Server"
+					VerticalOptions="Start" />
 				<ActivityIndicator x:Name="fetchIndicator" IsRunning="false" />
 				<Label
 					x:Name="fetchLabel"
@@ -117,7 +120,12 @@
 					FontSize="Large"
 					Text=""
 					VerticalOptions="Center" />
+				<StackLayout Padding="10" Orientation="Vertical">
+					<Label Text="{Binding GetLastSyncDate}" />
+					<Label Text="{Binding GetLastSyncTime}" />
+				</StackLayout>
 			</StackLayout>
+
 			<!--<ListView Margin="10"
                 ItemsSource="{Binding Sessions}"
                       HasUnevenRows="True">
