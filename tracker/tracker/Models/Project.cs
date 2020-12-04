@@ -267,7 +267,7 @@ namespace tracker.Models
         [Ignore]
         public string GetLastSyncDate
         {
-            get { return LastSyncDate.ToString("dd.MM.yyyy HH:mm:ss"); }
+            get { return LastSyncDate.ToString("dd.MM.yyyy") + " at " + LastSyncDate.ToString("HH:mm"); }
         }
         [Ignore]
         public string GetLastSyncTime
