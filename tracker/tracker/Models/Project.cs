@@ -183,7 +183,7 @@ namespace tracker.Models
             get
             {
                 double total = Time.TotalHours * payment;
-                return @"Total: " + total.ToString("F") + " " + Currency;
+                return total.ToString("F") + " " + Currency;
             }
         }
 

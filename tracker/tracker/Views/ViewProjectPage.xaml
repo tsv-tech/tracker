@@ -65,12 +65,12 @@
 				</Grid.ColumnDefinitions>
 
 				<Label Grid.Row="0" Text="Project Name: " />
-				<Label Grid.Row="1" Text="Author: " />
+				<Label Grid.Row="1" Text="Ordered by: " />
 				<Label Grid.Row="2" Text="Custom ID: " />
 				<Label Grid.Row="3" Text="Date Created: " />
-				<Label Grid.Row="4" Text="Total TIme: " />
+				<Label Grid.Row="4" Text="Total Time: " />
 				<Label Grid.Row="5" Text="Payment: " />
-				<Label Grid.Row="6" Text="Total Price: " />
+				<Label Grid.Row="6" Text="Earned: " />
 				<Label Grid.Row="7" Text="Comment: " />
 
 				<Entry

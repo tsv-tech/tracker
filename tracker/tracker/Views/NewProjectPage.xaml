@@ -12,7 +12,7 @@
 		<StackLayout Padding="10">
 
 			<Entry Placeholder="Project Name" Text="{Binding Name}" />
-			<Entry Placeholder="For" Text="{Binding Author}" />
+			<Entry Placeholder="Ordered by" Text="{Binding Author}" />
 			<Entry Placeholder="Custom ID" Text="{Binding CustomId}" />
 			<Entry
 				Keyboard="Numeric"
