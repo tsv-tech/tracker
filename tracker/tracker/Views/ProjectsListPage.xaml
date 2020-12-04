@@ -59,10 +59,11 @@
 										<Label
 											FontSize="30"
 											Text="{Binding Name}"
-											TextColor="{StaticResource Key=text-primary-color}" />
+											TextColor="{StaticResource Key=text-secondary-color}" />
 										<Label Margin="0,10,0,0" Text="Time Spent" />
 										<StackLayout Orientation="Horizontal" Spacing="15">
 											<Label
+												FontAttributes="Bold"
 												FontSize="40"
 												Text="{Binding GetTime}"
 												TextColor="{StaticResource Key=text-primary-color}" />

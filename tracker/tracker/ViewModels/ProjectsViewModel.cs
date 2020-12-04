@@ -131,7 +131,7 @@ namespace tracker.ViewModels
             {
                 ActiveProject.Add(project);
                 Start(project);
-                MoveProjectToTop(project);
+                //MoveProjectToTop(project);
             }
             else
             {
@@ -192,7 +192,7 @@ namespace tracker.ViewModels
                 }
             }
             StartGlobalTimer();
-            MoveProjectToTop(ActiveProject[0]);
+            //MoveProjectToTop(ActiveProject[0]);
         }
 
         public void Start(Project project)

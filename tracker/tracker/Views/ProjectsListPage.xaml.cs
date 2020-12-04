@@ -22,7 +22,7 @@ namespace tracker.Views
 
             MessagingCenter.Subscribe<Project>(this, "MsgScrollToProject", (project) =>
             {
-                ProjectsListView.ScrollTo(project, ScrollToPosition.MakeVisible, true);
+                ProjectsListView.ScrollTo(project, ScrollToPosition.Start, true);
             });
         }
 

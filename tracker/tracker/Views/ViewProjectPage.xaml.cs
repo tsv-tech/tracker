@@ -115,7 +115,7 @@ namespace tracker.Views
         {
             await Share.RequestAsync(new ShareTextRequest
             {
-                Text = LocalProject.CustomId + "\nYou can use this ID in Time App to track total time. ",
+                Text = "\nEnter this ID in Time App: " + LocalProject.CustomId,
                 Title = "Share Project"
             });
         }
