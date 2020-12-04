@@ -18,6 +18,7 @@ namespace tracker.Views
         public string PaymentString { get; set; }
         public int paymentInt = 0;
         public bool IsFetching { get; set; } = false;
+        public string Errors { get; set; }
         public NewProjectPage(Project project)
         {
             InitializeComponent();
@@ -27,11 +28,33 @@ namespace tracker.Views
 
         private async void btnCreateClicked(object sender, EventArgs e)
         {
+            Errors = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(LocalProject.Name))
+            {
+                Errors += "Project Name field is required\n";
+            }
+
             if (string.IsNullOrWhiteSpace(PaymentString))
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Payment field is required", "OK");
+                //await Application.Current.MainPage.DisplayAlert("Alert", "Payment field is required", "OK");
+                //return;
+                Errors += "Payment field is required\n";
+            }
+
+            if (string.IsNullOrWhiteSpace(LocalProject.CustomId))
+            {
+                //await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID must be at least 1 character long", "OK");
+                //return;
+                Errors += "Custom ID field is required\n";
+            }
+
+            if (!string.IsNullOrEmpty(Errors))
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", Errors, "OK");
                 return;
             }
+
 
             if (Int32.TryParse(PaymentString, out paymentInt))
             {
@@ -43,12 +66,6 @@ namespace tracker.Views
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(LocalProject.CustomId))
-            {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID must be at least 1 character long", "OK");
-                return;
-            }
-            
             if (App.PROJECTS_VM.Projects.Any(p => p.CustomId == LocalProject.CustomId))
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID already exists in LOCAL DATABASE", "OK");
@@ -67,7 +84,7 @@ namespace tracker.Views
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID already exists at REMOTE SERVER", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID already exists at REMOTE SERVER\n", "OK");
                 return;
             }
 

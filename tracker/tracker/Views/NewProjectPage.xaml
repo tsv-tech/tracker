@@ -12,13 +12,13 @@
 		<StackLayout Padding="10">
 
 			<Entry Placeholder="Project Name" Text="{Binding Name}" />
-			<Entry Placeholder="Ordered by" Text="{Binding Author}" />
+			<Entry Placeholder="Ordered by (optional)" Text="{Binding Author}" />
 			<Entry Placeholder="Custom ID" Text="{Binding CustomId}" />
 			<Entry
 				Keyboard="Numeric"
 				Placeholder="Payment"
 				Text="{Binding Path=PaymentString, Source={x:Reference cpNewProject}}" />
-			<Entry Placeholder="Comment" Text="{Binding Comment}" />
+			<Entry Placeholder="Comment (optional)" Text="{Binding Comment}" />
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
