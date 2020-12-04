@@ -15,6 +15,9 @@ namespace tracker.Views
     public partial class NewProjectPage : ContentPage
     {
         public Project LocalProject { get; private set; }
+        public string PaymentString { get; set; }
+        public int paymentInt = 0;
+        public bool IsFetching { get; set; } = false;
         public NewProjectPage(Project project)
         {
             InitializeComponent();
@@ -24,7 +27,23 @@ namespace tracker.Views
 
         private async void btnCreateClicked(object sender, EventArgs e)
         {
-            if (LocalProject.CustomId == null || LocalProject.CustomId == "")
+            if (string.IsNullOrWhiteSpace(PaymentString))
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Payment field is required", "OK");
+                return;
+            }
+
+            if (Int32.TryParse(PaymentString, out paymentInt))
+            {
+                LocalProject.Payment = paymentInt;
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Payment must be a number", "OK");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(LocalProject.CustomId))
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID must be at least 1 character long", "OK");
                 return;
@@ -36,8 +55,10 @@ namespace tracker.Views
                 return;
             }
 
+            SetIndicator(true);
             var item = await FetchProjectTask(LocalProject.CustomId);
-            
+            SetIndicator(false);
+
             if (item == null)
             {
                 await Navigation.PopAsync();
@@ -92,6 +113,12 @@ namespace tracker.Views
             }
             else { return null; }
 
+        }
+
+        private void SetIndicator(bool param)
+        {
+            IsFetchingIndicator.IsRunning = param;
+            IsFetchingIndicator.IsVisible = param;
         }
     }
 }
