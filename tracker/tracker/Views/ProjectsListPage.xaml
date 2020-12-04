@@ -43,7 +43,8 @@
 				<ListView
 					x:Name="ProjectsListView"
 					HasUnevenRows="True"
-					ItemsSource="{Binding Projects}">
+					ItemsSource="{Binding Projects}"
+					SelectionMode="None">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>

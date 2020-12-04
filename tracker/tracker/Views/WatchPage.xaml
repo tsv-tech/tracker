@@ -31,6 +31,7 @@
 			<ListView
 				HasUnevenRows="True"
 				ItemsSource="{Binding WatchProjects}"
+				SelectionMode="None"
 				SeparatorVisibility="None">
 				<ListView.ItemTemplate>
 					<DataTemplate>
