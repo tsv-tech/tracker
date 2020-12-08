@@ -48,6 +48,7 @@
 											<StackLayout>
 												<Label Text="Custom ID:" />
 												<Label
+													Margin="0,-8,0,0"
 													FontSize="Small"
 													Text="{Binding CustomId}"
 													TextColor="Black" />
@@ -65,13 +66,15 @@
 										</StackLayout>
 										<Label Text="Project Name:" />
 										<Label
+											Margin="0,-8,0,0"
 											FontSize="Large"
 											Text="{Binding Name}"
 											TextColor="Black" />
 
 										<Label Text="Total Time:" />
-										<StackLayout Orientation="Horizontal">
+										<StackLayout Margin="0,-10,0,0" Orientation="Horizontal">
 											<Label
+												FontAttributes="Bold"
 												FontSize="40"
 												Text="{Binding GetTime}"
 												TextColor="Black" />
