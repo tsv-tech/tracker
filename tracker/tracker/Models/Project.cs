@@ -276,8 +276,8 @@ namespace tracker.Models
             {
                 
                     return string.Format("{0}h {1:mm}m {1:ss}s",
-                     (int)Time.TotalHours,
-                     Time);
+                     (int)LastSyncTime.TotalHours,
+                     LastSyncTime);
             }
         }
         #endregion
