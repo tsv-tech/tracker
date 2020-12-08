@@ -42,6 +42,7 @@
 			<StackLayout>
 				<ListView
 					x:Name="ProjectsListView"
+					CachingStrategy="RecycleElementAndDataTemplate"
 					HasUnevenRows="True"
 					ItemsSource="{Binding Projects}"
 					SelectionMode="None">

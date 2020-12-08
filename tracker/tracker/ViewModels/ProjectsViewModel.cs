@@ -131,7 +131,7 @@ namespace tracker.ViewModels
             {
                 ActiveProject.Add(project);
                 Start(project);
-                //MoveProjectToTop(project);
+                MoveProjectToTop(project);
             }
             else
             {
