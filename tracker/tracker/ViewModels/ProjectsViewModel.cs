@@ -227,12 +227,11 @@ namespace tracker.ViewModels
                 if (!sleep)
                 {
                     project.Time += project.SessionTime;
-                    //App.DBSessions.SaveItem(new Session
-                    //{
-                    //    ProjectId = project.Id,
-                    //    Date = project.SessionStartTime.ToString(),
-                    //    Duration = (DateTime.Now - project.SessionStartTime).ToString(@"hh\:mm\:ss")
-                    //});
+
+                    App.DBSessions.SaveItem(new Session(project.Id, project.SessionStartTime, 
+                        project.SessionStartTime + project.SessionTime, project.SessionTime)
+                   
+                    );
                 }
 
                 App.DBProjects.SaveItem(project);
