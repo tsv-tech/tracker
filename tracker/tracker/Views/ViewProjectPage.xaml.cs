@@ -101,11 +101,12 @@ namespace tracker.Views
                 fetchLabel.Text = "Sent!";
                 LocalProject.LastSyncDate = DateTime.Now;
                 LocalProject.LastSyncTime = LocalProject.Time;
-                //await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
+
+                MessagingCenter.Send<Project>(LocalProject, "MsgUpdateLastSyncProject");
             }
             else
             {
-                fetchLabel.Text = "Error!";
+                fetchLabel.Text = "Error sending data, plese try again in 1 hour.";
                 //await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
             }
             

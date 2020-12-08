@@ -54,6 +54,11 @@ namespace tracker.ViewModels
                 Application.Current.MainPage.DisplayAlert("Info", "Changes Saved!", "OK");
             });
 
+            MessagingCenter.Subscribe<Project>(this, "MsgUpdateLastSyncProject", (project) =>
+            {
+                ExecuteUpdateLastSync(project);
+            });
+
             MessagingCenter.Subscribe<Project>(this, "MsgCreateProject", (project) =>
             {
                 App.DBProjects.SaveItem(project);
@@ -274,6 +279,18 @@ namespace tracker.ViewModels
                     break;
                 }
             App.DBProjects.SaveItem(project);
+        }
+
+        public void ExecuteUpdateLastSync(Project project)
+        {
+            foreach (var p in Projects)
+                if (p.Id == project.Id)
+                {
+                    p.LastSyncDate = project.LastSyncDate;
+                    p.LastSyncTime = project.LastSyncTime;
+                    App.DBProjects.SaveItem(p);
+                    break;
+                }
         }
 
         public async void EditTime(object parameter)

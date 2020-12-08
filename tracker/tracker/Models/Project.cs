@@ -31,6 +31,8 @@ namespace tracker.Models
             this.Time = p.Time;
             this.DateCreated = p.DateCreated;
             this.Currency = p.Currency;
+            this.LastSyncDate = p.LastSyncDate;
+            this.LastSyncTime = p.LastSyncTime;
         }
         public Project()
         {
@@ -236,7 +238,7 @@ namespace tracker.Models
         #endregion TIMERS
 
         #region Other
-        DateTime lastSyncDate = DateTime.Now;
+        DateTime lastSyncDate;
         public DateTime LastSyncDate
         {
             get { return lastSyncDate; }
@@ -251,7 +253,7 @@ namespace tracker.Models
             }
         }
 
-        TimeSpan lastSyncTime = new TimeSpan(0, 0, 0);
+        TimeSpan lastSyncTime;
         public TimeSpan LastSyncTime
         {
             get { return lastSyncTime; }
