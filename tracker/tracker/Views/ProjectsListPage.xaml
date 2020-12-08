@@ -59,16 +59,27 @@
 
 										<Label Text="Project Name" />
 										<Label
+											Margin="0,-10,0,0"
 											FontSize="30"
 											Text="{Binding Name}"
 											TextColor="{StaticResource Key=text-secondary-color}" />
 										<Label Margin="0,10,0,0" Text="Time Spent" />
-										<StackLayout Orientation="Horizontal" Spacing="15">
+										<StackLayout
+											Margin="0,-10,0,0"
+											Orientation="Horizontal"
+											Spacing="15">
 											<Label
 												FontAttributes="Bold"
 												FontSize="40"
 												Text="{Binding GetTime}"
 												TextColor="{StaticResource Key=text-primary-color}" />
+											<Label
+												Padding="-10,0,0,5"
+												FontAttributes="Bold"
+												FontSize="20"
+												Text="{Binding GetSeconds}"
+												TextColor="{StaticResource Key=text-primary-color}"
+												VerticalOptions="End" />
 											<ImageButton
 												BackgroundColor="Transparent"
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"

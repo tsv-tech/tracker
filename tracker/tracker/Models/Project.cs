@@ -93,6 +93,7 @@ namespace tracker.Models
                     return;
                 sessionTime = value;
                 OnPropertyChanged(nameof(GetTime));
+                OnPropertyChanged(nameof(GetSeconds));
             }
         }
 
@@ -104,11 +105,27 @@ namespace tracker.Models
             get
             {
                 if (isRunning)
-                    return string.Format("{0}:{1:mm}:{1:ss}",
+                    return string.Format("{0}:{1:mm}",
                          (int)(Time + SessionTime).TotalHours,
                          Time + SessionTime);
                 else
-                    return string.Format("{0}:{1:mm}:{1:ss}",
+                    return string.Format("{0}:{1:mm}",
+                     (int)Time.TotalHours,
+                     Time);
+            }
+        }
+        [Ignore]
+        public string GetSeconds
+        {
+            //get Time + SessionTime while active and just Time if not
+            get
+            {
+                if (isRunning)
+                    return string.Format(":{1:ss}",
+                         (int)(Time + SessionTime).TotalHours,
+                         Time + SessionTime);
+                else
+                    return string.Format(":{1:ss}",
                      (int)Time.TotalHours,
                      Time);
             }
