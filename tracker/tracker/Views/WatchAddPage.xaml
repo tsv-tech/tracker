@@ -4,17 +4,35 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 	<ContentPage.Content>
-		<StackLayout>
+		<StackLayout Padding="10">
 			<Label Text="Custom ID" />
 			<Entry Placeholder="Enter Custom ID here..." Text="{Binding CustomId}" />
+			<Label
+				x:Name="errorCustomId"
+				Margin="6,-10,0,10"
+				IsVisible="false"
+				Text="Custom ID is required"
+				TextColor="Red" />
 			<Label Text="Project Name" />
 			<Entry Placeholder="Enter Project Name here..." Text="{Binding Name}" />
+			<Label
+				x:Name="errorProjectName"
+				Margin="6,-10,0,10"
+				IsVisible="false"
+				Text="Project Name is required"
+				TextColor="Red" />
 			<Label Text="Freelancer" />
 			<Entry Placeholder="(optional) Enter Freelancer's Name here..." Text="{Binding Author}" />
 
 			<StackLayout Orientation="Horizontal">
-				<Button Clicked="AddClicked" Text="Add" />
-				<Button Clicked="BackClicked" Text="Back" />
+				<Button
+					Clicked="AddClicked"
+					HorizontalOptions="FillAndExpand"
+					Text="Add" />
+				<Button
+					Clicked="BackClicked"
+					HorizontalOptions="FillAndExpand"
+					Text="Back" />
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

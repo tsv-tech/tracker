@@ -1,28 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="tracker.Views.NewProjectPage"
-             Title="New Project">
-    <ContentPage.Content>
-        <StackLayout Padding="10">
+<ContentPage
+	x:Class="tracker.Views.NewProjectPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Name="cpNewProject"
+	Title="New Project"
+	mc:Ignorable="d">
+	<ContentPage.Content>
+		<StackLayout Padding="10">
 
-            <Entry Placeholder="Project Name" Text="{Binding Name}"/>
-            <Entry Placeholder="Author" Text="{Binding Author}"/>
-            <Entry Placeholder="Custom ID" Text="{Binding CustomId}"/>
-            <Label Text="Payment" />
-            <Entry Placeholder="Payment" Text="{Binding Payment}"/>
-            <Entry Placeholder="Comment" Text="{Binding Comment}"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Text="Create" Clicked="btnCreateClicked"/>
-                <Button Grid.Column="1" Text="Cancel" Clicked="btnCancelClicked"/>
-            </Grid>
-        </StackLayout>
-    </ContentPage.Content>
+			<Entry Placeholder="Project Name" Text="{Binding Name}" />
+			<Entry Placeholder="Ordered by (optional)" Text="{Binding Author}" />
+			<Entry Placeholder="Custom ID" Text="{Binding CustomId}" />
+			<Entry
+				Keyboard="Numeric"
+				Placeholder="Payment"
+				Text="{Binding Path=PaymentString, Source={x:Reference cpNewProject}}" />
+			<Entry Placeholder="Comment (optional)" Text="{Binding Comment}" />
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button Clicked="btnCreateClicked" Text="Create" />
+				<Button
+					Grid.Column="1"
+					Clicked="btnCancelClicked"
+					Text="Cancel" />
+
+
+			</Grid>
+			<ActivityIndicator
+				x:Name="IsFetchingIndicator"
+				IsRunning="False"
+				IsVisible="False" />
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>

@@ -35,6 +35,13 @@ namespace tracker.Views
 
         private void btnApplyClicked(object sender, EventArgs e)
         {
+            errMinutes.IsVisible = false;
+            if (Minutes >= 60)
+            {
+                errMinutes.IsVisible = true;
+                return;
+            }
+
             Navigation.PopAsync();
 
             if (Hours > 24)

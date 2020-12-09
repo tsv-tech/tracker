@@ -10,6 +10,7 @@ using tracker.Models;
 using tracker.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace tracker.Views
 {
@@ -62,6 +63,9 @@ namespace tracker.Views
 
         public async Task PostToServerAsync(bool isNewItem = true)
         {
+            fetchLabel.Text = "";
+            fetchIndicator.IsRunning = true;
+            fetchIndicator.IsVisible = true;
             // httpclient будет устанавливать соединение с внешним сервером
             HttpClient client = new HttpClient();
 
@@ -71,7 +75,7 @@ namespace tracker.Views
 
             Dictionary<string, string> contentRaw = new Dictionary<string, string>();
             contentRaw.Add("customId", LocalProject.CustomId);
-            contentRaw.Add("time", LocalProject.GetTime);
+            contentRaw.Add("time", LocalProject.Time.ToString());
 
             //json - объект который "понимает" внешний сервер, т.е. здесь он создается из начального объекта, который
             //приводится в нужную форму
@@ -87,16 +91,39 @@ namespace tracker.Views
                 response = await client.PostAsync(uri, content);
             }
 
+            fetchIndicator.IsRunning = false;
+            fetchIndicator.IsVisible = false;
             /* проверка ответа от сервера: если все сработало - то выполняется показ страницы (данная страница тестовая, поэтому
              * пока не обращаем внимания*/
+            
             if (response.IsSuccessStatusCode)
             {
-                await DisplayAlert("Success", "Total time has been sent to server successfully!", "Ok");
+                fetchLabel.Text = "Sent!";
+                LocalProject.LastSyncDate = DateTime.Now;
+                LocalProject.LastSyncTime = LocalProject.Time;
+
+                MessagingCenter.Send<Project>(LocalProject, "MsgUpdateLastSyncProject");
             }
             else
             {
-                await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
+                fetchLabel.Text = "Error sending data, plese try again in 1 hour.";
+                //await DisplayAlert("Error", "Something went wrong\n" + response.StatusCode.ToString(), "Ok");
             }
+            
+        }
+
+        public async Task ShareText()
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = "\nEnter this ID in Time App: " + LocalProject.CustomId,
+                Title = "Share Project"
+            });
+        }
+
+        private async void barShareClicked(object sender, EventArgs e)
+        {
+            await ShareText();
         }
     }
 }

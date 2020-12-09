@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using tracker.ViewModels;
+using tracker.Models;
 
 namespace tracker.Views
 {
@@ -16,17 +17,22 @@ namespace tracker.Views
         public ProjectsListPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectsViewModel();
-        }
+            BindingContext = App.PROJECTS_VM;
+            App.PROJECTS_VM.Navigation = this.Navigation;
 
-        private async void WatchOther(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new WatchPage());
+            MessagingCenter.Subscribe<Project>(this, "MsgScrollToProject", (project) =>
+            {
+                Task.Delay(200).ContinueWith(t =>
+                {
+                    ProjectsListView.ScrollTo(project, ScrollToPosition.Start, true);
+                });
+            });
         }
 
         private async void btnSettingsClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsPage());
         }
+
     }
 }

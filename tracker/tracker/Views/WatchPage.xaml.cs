@@ -18,7 +18,7 @@ namespace tracker.Views
         {
             InitializeComponent();
             BindingContext = App.WATCH_VM;
-
+            App.WATCH_VM.Navigation = this.Navigation;
         }
 
         protected override void OnAppearing()

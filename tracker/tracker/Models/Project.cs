@@ -31,6 +31,8 @@ namespace tracker.Models
             this.Time = p.Time;
             this.DateCreated = p.DateCreated;
             this.Currency = p.Currency;
+            this.LastSyncDate = p.LastSyncDate;
+            this.LastSyncTime = p.LastSyncTime;
         }
         public Project()
         {
@@ -91,6 +93,7 @@ namespace tracker.Models
                     return;
                 sessionTime = value;
                 OnPropertyChanged(nameof(GetTime));
+                OnPropertyChanged(nameof(GetSeconds));
             }
         }
 
@@ -102,11 +105,27 @@ namespace tracker.Models
             get
             {
                 if (isRunning)
-                    return string.Format("{0}:{1:mm}:{1:ss}",
+                    return string.Format("{0}:{1:mm}",
                          (int)(Time + SessionTime).TotalHours,
                          Time + SessionTime);
                 else
-                    return string.Format("{0}:{1:mm}:{1:ss}",
+                    return string.Format("{0}:{1:mm}",
+                     (int)Time.TotalHours,
+                     Time);
+            }
+        }
+        [Ignore]
+        public string GetSeconds
+        {
+            //get Time + SessionTime while active and just Time if not
+            get
+            {
+                if (isRunning)
+                    return string.Format(":{1:ss}",
+                         (int)(Time + SessionTime).TotalHours,
+                         Time + SessionTime);
+                else
+                    return string.Format(":{1:ss}",
                      (int)Time.TotalHours,
                      Time);
             }
@@ -183,7 +202,17 @@ namespace tracker.Models
             get
             {
                 double total = Time.TotalHours * payment;
-                return @"Total: " + total.ToString("F") + " " + Currency;
+                return total.ToString("F") + " " + Currency;
+            }
+        }
+
+        bool isBusy = false;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                SetProperty(ref isBusy, value);
             }
         }
         /*
@@ -224,5 +253,52 @@ namespace tracker.Models
         public string GetColor { get { return !isRunning ? "White" : "LightGreen"; } }
 
         #endregion TIMERS
+
+        #region Other
+        DateTime lastSyncDate;
+        public DateTime LastSyncDate
+        {
+            get { return lastSyncDate; }
+            set
+            {
+                //SetProperty(ref dateCreated, value);
+                if (value == lastSyncDate)
+                    return;
+                lastSyncDate = value;
+                OnPropertyChanged(nameof(LastSyncDate));
+                OnPropertyChanged(nameof(GetLastSyncDate));
+            }
+        }
+
+        TimeSpan lastSyncTime;
+        public TimeSpan LastSyncTime
+        {
+            get { return lastSyncTime; }
+            set
+            {
+                if (value == lastSyncTime)
+                    return;
+                lastSyncTime = value;
+                OnPropertyChanged(nameof(LastSyncTime));
+                OnPropertyChanged(nameof(GetLastSyncTime));
+            }
+        }
+        [Ignore]
+        public string GetLastSyncDate
+        {
+            get { return LastSyncDate.ToString("dd.MM.yyyy") + " at " + LastSyncDate.ToString("HH:mm"); }
+        }
+        [Ignore]
+        public string GetLastSyncTime
+        {
+            get
+            {
+                
+                    return string.Format("{0}h {1:mm}m {1:ss}s",
+                     (int)LastSyncTime.TotalHours,
+                     LastSyncTime);
+            }
+        }
+        #endregion
     }
 }

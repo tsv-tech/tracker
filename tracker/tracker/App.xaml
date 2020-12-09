@@ -1,11 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="tracker.App">
-    <Application.Resources>
+<Application
+	x:Class="tracker.App"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+	<Application.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+			</OnPlatform>
+			<!--  Pallete  -->
+			<Color x:Key="primary-back-title-color">#6200ee</Color>
+			<Color x:Key="primary-title-color">#FFFFFF</Color>
 
-    </Application.Resources>
+			<Color x:Key="background-main-color">#FFFFFF</Color>
+			<Color x:Key="frame-main-color">#EAE7DC</Color>
+			<Color x:Key="frame-secondary-color">#F9E7DA</Color>
+			<Color x:Key="primary-color">#6200ee</Color>
+			<Color x:Key="primary-variant-color">#3700b3</Color>
+			<Color x:Key="secondary-color">#03dac5</Color>
+			<Color x:Key="text-primary-color">#000</Color>
+			<Color x:Key="text-secondary-color">#000</Color>
+
+			<!--  Pallete-end  -->
+			<Style ApplyToDerivedTypes="true" TargetType="NavigationPage">
+				<Setter Property="BarBackgroundColor" Value="{StaticResource Key=primary-back-title-color}" />
+				<Setter Property="BarTextColor" Value="{StaticResource Key=primary-title-color}" />
+			</Style>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

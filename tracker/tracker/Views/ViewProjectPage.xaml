@@ -5,87 +5,131 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:tools="clr-namespace:tracker.Tools"
 	x:Name="cpViewProject"
 	Title="Details"
 	mc:Ignorable="d">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+			</OnPlatform>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Clicked="barSaveClicked"
+			Clicked="barShareClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.ShareVariantOutline},
+			                            Color=White,
+			                            Size=40}"
 			Order="Primary"
-			Priority="0"
-			Text="Save" />
+			Priority="0" />
+		<ToolbarItem
+			Clicked="barSaveClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},
+			                            Color=White,
+			                            Size=40}"
+			Order="Primary"
+			Priority="0" />
 		<ToolbarItem
 			Clicked="barDeleteClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.DeleteOutline},
+			                            Color=White,
+			                            Size=40}"
 			Order="Primary"
-			Priority="1"
-			Text="Delete" />
+			Priority="0" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<StackLayout>
+		<ScrollView>
+			<StackLayout>
 
-			<Grid Padding="10" RowSpacing="10">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
+				<Grid Padding="10" RowSpacing="10">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
 
-				<Label Grid.Row="0" Text="Name: " />
-				<Label Grid.Row="1" Text="Author: " />
-				<Label Grid.Row="2" Text="Custom ID: " />
-				<Label Grid.Row="3" Text="Date Created: " />
-				<Label Grid.Row="4" Text="Total TIme: " />
-				<Label Grid.Row="5" Text="Payment: " />
-				<Label Grid.Row="6" Text="Total Price: " />
-				<Label Grid.Row="7" Text="Comment: " />
+					<Label Grid.Row="0" Text="Project Name: " />
+					<Label Grid.Row="1" Text="Ordered by: " />
+					<Label Grid.Row="2" Text="Custom ID: " />
+					<Label Grid.Row="3" Text="Date Created: " />
+					<Label Grid.Row="4" Text="Total Time: " />
+					<Label Grid.Row="5" Text="Payment: " />
+					<Label Grid.Row="6" Text="Earned: " />
+					<Label Grid.Row="7" Text="Comment: " />
 
-				<Entry
-					Grid.Row="0"
-					Grid.Column="2"
-					Text="{Binding Name}" />
-				<Entry
-					Grid.Row="1"
-					Grid.Column="2"
-					Text="{Binding Author}" />
-				<Entry
-					Grid.Row="2"
-					Grid.Column="2"
-					Text="{Binding CustomId}" />
-				<DatePicker
-					Grid.Row="3"
-					Grid.Column="2"
-					Date="{Binding DateCreated}" />
-				<Entry
-					Grid.Row="4"
-					Grid.Column="2"
-					IsReadOnly="True"
-					Text="{Binding GetTime}" />
-				<Entry
-					Grid.Row="5"
-					Grid.Column="2"
-					Text="{Binding Payment}" />
-				<Entry
-					Grid.Row="6"
-					Grid.Column="2"
-					IsReadOnly="True"
-					Text="{Binding GetTotalPrice}" />
-				<Entry
-					Grid.Row="7"
-					Grid.Column="2"
-					Text="{Binding Comment}" />
-			</Grid>
-			<Button Clicked="btnSendClicked" Text="Send To Server" />
-			<!--<ListView Margin="10"
+					<Entry
+						Grid.Row="0"
+						Grid.Column="2"
+						Text="{Binding Name}" />
+					<Entry
+						Grid.Row="1"
+						Grid.Column="2"
+						Text="{Binding Author}" />
+					<Entry
+						Grid.Row="2"
+						Grid.Column="2"
+						Text="{Binding CustomId}" />
+					<DatePicker
+						Grid.Row="3"
+						Grid.Column="2"
+						Date="{Binding DateCreated}" />
+					<Entry
+						Grid.Row="4"
+						Grid.Column="2"
+						IsReadOnly="True"
+						Text="{Binding GetTime}" />
+					<Entry
+						Grid.Row="5"
+						Grid.Column="2"
+						Text="{Binding Payment}" />
+					<Entry
+						Grid.Row="6"
+						Grid.Column="2"
+						IsReadOnly="True"
+						Text="{Binding GetTotalPrice}" />
+					<Entry
+						Grid.Row="7"
+						Grid.Column="2"
+						Text="{Binding Comment}" />
+				</Grid>
+				<StackLayout Padding="10,0,0,0" Orientation="Horizontal">
+					<Button
+						Clicked="btnSendClicked"
+						Text="Send To Server"
+						VerticalOptions="Start" />
+					<ActivityIndicator x:Name="fetchIndicator" IsRunning="false" />
+					<Label
+						x:Name="fetchLabel"
+						Margin="10,0"
+						FontSize="Large"
+						Text=""
+						VerticalOptions="Center" />
+
+				</StackLayout>
+				<StackLayout Padding="10" Orientation="Horizontal">
+					<Label Text="Last sync: " TextColor="Green" />
+					<Label Margin="10,0,0,0" Text="{Binding GetLastSyncTime}" />
+					<Label Margin="20,0,0,0" Text="{Binding GetLastSyncDate}" />
+				</StackLayout>
+
+				<!--<ListView Margin="10"
                 ItemsSource="{Binding Sessions}"
                       HasUnevenRows="True">
                 <ListView.ItemTemplate>
@@ -94,6 +138,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>-->
-		</StackLayout>
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

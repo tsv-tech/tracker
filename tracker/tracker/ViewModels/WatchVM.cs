@@ -21,6 +21,12 @@ namespace tracker.ViewModels
             var range = new List<Project>(App.DBWatch.GetItems());
             WatchProjects.AddRange(range);
 
+            //fixes indicators when page loads 1st time
+            foreach (var p in WatchProjects)
+            {
+                p.IsBusy = false;
+            }
+
             MessagingCenter.Subscribe<Project>(this, "MsgAddWatchProject", (project) =>
             {
                 App.DBWatch.SaveItem(project);
@@ -32,21 +38,30 @@ namespace tracker.ViewModels
             FetchCommand = new Command(Fetch);
 
             WatchAddCommand = new Command(async () => { 
-                await Application.Current.MainPage.Navigation.PushAsync(new WatchAddPage(new Project())); 
+                await Navigation.PushAsync(new WatchAddPage(new Project())); 
             });
 
-            WatchDeleteCommand = new Command((object parameter) =>
-            {
-                var project = parameter as Project;
-                WatchProjects.Remove(project);
-                App.DBWatch.DeleteItem(project.Id);
-            });
+            WatchDeleteCommand = new Command(Delete);
         }
+
+        public INavigation Navigation;
         public ObservableRangeCollection<Project> WatchProjects { get; set; }
 
         public ICommand FetchCommand { get; }
         public ICommand WatchAddCommand { get; }
         public ICommand WatchDeleteCommand { get; }
+
+        private async void Delete(object parameter)
+        {
+            bool answer = await Application.Current.MainPage.DisplayAlert("ALERT", "You are going to delete this project \n Continue?", "Yes", "No");
+            if (!answer)
+            {
+                return;
+            }
+            var project = parameter as Project;
+            WatchProjects.Remove(project);
+            App.DBWatch.DeleteItem(project.Id);
+        }
 
         private async void Fetch(object parameter)
         {
@@ -57,23 +72,24 @@ namespace tracker.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Alert", "Custom ID must be at least 1 character long", "OK");
                 return;
             }
-
+            project.IsBusy = true;
             var item = await FetchProjectTask(project);
             if (item == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "ID does not exist", "OK");
+                project.IsBusy = false;
                 return;
             }
             try
             {
                 project.Time = TimeSpan.Parse(item["time"]);
             }
-            catch {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid Time format", "OK");
+            catch (Exception e) {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Invalid Time format " + e.Message, "OK");
             }
 
             App.DBWatch.SaveItem(project);
-
+            project.IsBusy = false;
         }
         public async Task<Dictionary<string, string>> FetchProjectTask(Project project)
         {
