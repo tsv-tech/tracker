@@ -12,10 +12,10 @@
 			Priority="0"
 			Text="" />
 		<ToolbarItem
-			Clicked="barExportClicked"
+			Command="{Binding ExportTappedCommand}"
 			Order="Primary"
 			Priority="0"
-			Text="PR" />
+			Text="EXPORT" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
