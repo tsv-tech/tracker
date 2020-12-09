@@ -28,6 +28,14 @@
 			Order="Primary"
 			Priority="0" />
 		<ToolbarItem
+			Clicked="barCalendarClicked"
+			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+			                            Glyph={x:Static tools:IconFont.Calendar},
+			                            Color=White,
+			                            Size=40}"
+			Order="Primary"
+			Priority="0" />
+		<ToolbarItem
 			Clicked="barSaveClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
 			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},

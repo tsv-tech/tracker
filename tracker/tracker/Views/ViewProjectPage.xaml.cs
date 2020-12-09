@@ -125,5 +125,10 @@ namespace tracker.Views
         {
             await ShareText();
         }
+
+        private async void barCalendarClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CalendarPage(LocalProject));
+        }
     }
 }

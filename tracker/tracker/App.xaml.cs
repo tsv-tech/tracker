@@ -19,6 +19,7 @@ namespace tracker
         public const string PROJECTS_FILE = "projects.db";
         public const string WATCH_FILE = "watch.db";
         public const string SESSIONS_FILE = "sessions.db";
+        public const string CSV_EXPORT_TMP_FILE = "export.csv";
 
         public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
         public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/upsert";
