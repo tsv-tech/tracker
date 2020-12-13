@@ -171,6 +171,9 @@ namespace tracker.ViewModels
             if (ActiveProject.Count == 0)
                 return;
 
+            //quick fix
+            MoveProjectToTop(ActiveProject[0]);
+
             IsActive = true;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
