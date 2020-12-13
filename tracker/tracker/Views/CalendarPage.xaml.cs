@@ -55,6 +55,7 @@ namespace tracker.Views
                 else
                 {
                     CurrentDaySessions = Sessions.Where(s => s.StartTime.Date == session.StartTime.Date).ToList();
+                    CurrentDaySessions.Reverse();
                     Days.Add(session.StartTime.Date, CurrentDaySessions);
                 }
 
