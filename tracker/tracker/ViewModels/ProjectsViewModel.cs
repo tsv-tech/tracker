@@ -168,6 +168,8 @@ namespace tracker.ViewModels
         {
             if (IsActive)
                 return;
+            if (ActiveProject.Count == 0)
+                return;
 
             IsActive = true;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>

@@ -34,5 +34,11 @@ namespace tracker.Views
             await Navigation.PushAsync(new SettingsPage());
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.PROJECTS_VM.RecoverGlobalTimer();
+        }
+
     }
 }

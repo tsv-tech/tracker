@@ -94,7 +94,7 @@ namespace tracker
 
         protected override void OnResume()
         {
-            PROJECTS_VM.ResumeActive();
+            PROJECTS_VM.RecoverGlobalTimer();
         }
     }
 }
