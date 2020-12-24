@@ -33,6 +33,9 @@ namespace tracker.Models
             this.Currency = p.Currency;
             this.LastSyncDate = p.LastSyncDate;
             this.LastSyncTime = p.LastSyncTime;
+
+            this.DayTime = p.DayTime;
+            this.CurrentDayId = p.CurrentDayId;
         }
         public Project()
         {
@@ -94,6 +97,9 @@ namespace tracker.Models
                 sessionTime = value;
                 OnPropertyChanged(nameof(GetTime));
                 OnPropertyChanged(nameof(GetSeconds));
+
+                OnPropertyChanged(nameof(GetDayTime));
+                OnPropertyChanged(nameof(GetDaySeconds));
             }
         }
 
@@ -243,6 +249,8 @@ namespace tracker.Models
                 OnPropertyChanged(nameof(GetTime));
                 OnPropertyChanged(nameof(GetState));
                 OnPropertyChanged(nameof(GetColor));
+
+                OnPropertyChanged(nameof(GetDayTime));
             }
         }
 
@@ -297,6 +305,68 @@ namespace tracker.Models
                     return string.Format("{0}h {1:mm}m {1:ss}s",
                      (int)LastSyncTime.TotalHours,
                      LastSyncTime);
+            }
+        }
+        #endregion
+
+        #region DAYTIME FEATURE
+
+        int currentDayId = 0;
+        public int CurrentDayId
+        {
+            get { return currentDayId; }
+            set
+            {
+                //SetProperty(ref dateCreated, value);
+                if (value == currentDayId)
+                    return;
+                currentDayId = value;
+                OnPropertyChanged(nameof(CurrentDayId));
+            }
+        }
+        TimeSpan dayTime = new TimeSpan(0, 0, 0);
+        public TimeSpan DayTime
+        {
+            get { return dayTime; }
+            set
+            {
+                if (value == dayTime)
+                    return;
+                dayTime = value;
+                OnPropertyChanged(nameof(GetDayTime));
+                OnPropertyChanged(nameof(DayTime));
+            }
+        }
+        [Ignore]
+        public string GetDayTime
+        {
+            //get Time + SessionTime while active and just Time if not
+            get
+            {
+                if (isRunning)
+                    return string.Format("{0}:{1:mm}",
+                         (int)(DayTime + SessionTime).TotalHours,
+                         DayTime + SessionTime);
+                else
+                    return string.Format("{0}:{1:mm}",
+                     (int)DayTime.TotalHours,
+                     DayTime);
+            }
+        }
+        [Ignore]
+        public string GetDaySeconds
+        {
+            //get Time + SessionTime while active and just Time if not
+            get
+            {
+                if (isRunning)
+                    return string.Format(":{1:ss}",
+                         (int)(DayTime + SessionTime).TotalHours,
+                         DayTime + SessionTime);
+                else
+                    return string.Format(":{1:ss}",
+                     (int)DayTime.TotalHours,
+                     DayTime);
             }
         }
         #endregion

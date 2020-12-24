@@ -10,20 +10,20 @@ using Xamarin.Forms.Xaml;
 namespace tracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EditTimePage : ContentPage
+    public partial class EditDayTime : ContentPage
     {
         public int Days { get; set; }
         public int Hours { get; set; }
         public int Minutes { get; set; }
 
         public Project LocalProject { get; set; }
-        public EditTimePage(Project project)
+        public EditDayTime(Project project)
         {
             InitializeComponent();
 
             LocalProject = project;
-            Hours = (int)project.Time.TotalHours;
-            Minutes = project.Time.Minutes;
+            Hours = (int)project.DayTime.TotalHours;
+            Minutes = project.DayTime.Minutes;
 
             BindingContext = this;
         }
@@ -41,6 +41,13 @@ namespace tracker.Views
                 errMinutes.IsVisible = true;
                 return;
             }
+            if (Hours >= 12)
+            {
+                errHours.IsVisible = true;
+                return;
+            }
+
+            Navigation.PopAsync();
 
             if (Hours > 24)
             {
@@ -48,22 +55,12 @@ namespace tracker.Views
                 Hours %= 24;
             }
 
-            //DAYTIME CORRECTION
-            TimeSpan newTime = new TimeSpan(Days, Hours, Minutes, 0);
-            TimeSpan gap = newTime - LocalProject.Time;
-
-            if (Math.Abs( gap.TotalHours) > Math.Abs(App.MAX_DAY_DURATION))
-            {
-                DisplayAlert("Info", "Difference must be less than 12 h", "Close");
-                return;
-                
-            }
-            Navigation.PopAsync();
-            LocalProject.Time = newTime;
-            MessagingCenter.Send<Project>(LocalProject, "EditTimeMessage");
-            MessagingCenter.Send<Project, TimeSpan>(LocalProject, "RecalcDays", gap);
+            var _newDayTime = new TimeSpan(Days, Hours, Minutes, 0);
+            LocalProject.Time += _newDayTime - LocalProject.DayTime;
+            LocalProject.DayTime = _newDayTime;
             
 
+            MessagingCenter.Send<Project>(LocalProject, "EditDayTimeMessage");
         }
     }
 }

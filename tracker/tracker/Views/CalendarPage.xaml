@@ -26,10 +26,7 @@
 						<StackLayout Padding="10,10,10,0">
 							<StackLayout Orientation="Horizontal">
 								<Label FontSize="Large" Text="Start:" />
-								<Label
-									FontAttributes="Bold"
-									FontSize="Large"
-									Text="{Binding GetStartTime}" />
+								<Label FontAttributes="Bold" Text="{Binding GetStartTime}" />
 								<Label
 									FontAttributes="Bold"
 									FontSize="Large"

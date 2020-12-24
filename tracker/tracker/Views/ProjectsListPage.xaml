@@ -63,6 +63,35 @@
 											FontSize="30"
 											Text="{Binding Name}"
 											TextColor="{StaticResource Key=text-secondary-color}" />
+
+										<Label Margin="0,10,0,0" Text="Today Spent:" />
+										<StackLayout
+											Margin="0,-10,0,0"
+											Orientation="Horizontal"
+											Spacing="15">
+											<Label
+												FontAttributes="Bold"
+												FontSize="40"
+												Text="{Binding GetDayTime}"
+												TextColor="{StaticResource Key=text-primary-color}" />
+											<Label
+												Padding="-10,0,0,5"
+												FontAttributes="Bold"
+												FontSize="20"
+												Text="{Binding GetDaySeconds}"
+												TextColor="{StaticResource Key=text-primary-color}"
+												VerticalOptions="End" />
+											<ImageButton
+												BackgroundColor="Transparent"
+												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
+												CommandParameter="{Binding}"
+												HorizontalOptions="EndAndExpand"
+												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+												                   Glyph={x:Static tools:IconFont.ClockTimeEightOutline},
+												                   Color={StaticResource Key=primary-variant-color},
+												                   Size=40}" />
+										</StackLayout>
+
 										<Label Margin="0,10,0,0" Text="Time Spent" />
 										<StackLayout
 											Margin="0,-10,0,0"

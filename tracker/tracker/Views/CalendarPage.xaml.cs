@@ -22,6 +22,9 @@ namespace tracker.Views
         public ICommand DayTappedCommand => new Command<DateTime>((date) => DayTapped(date));
         public ICommand ExportTappedCommand => new Command(async () => await ExportAndShare());
         public EventCollection Days { get; set; }
+
+        public List<Day> DaysList { get; set; }
+
         public List<Session> Sessions { get; set; }
         public Project LocalProject { get; set; }
         public int DayTotalTime { get; set; }
@@ -30,14 +33,18 @@ namespace tracker.Views
             InitializeComponent();
 
             Days = new EventCollection();
+            
             LocalProject = project;
-            LoadDays();
+            DaysList = App.DBDays.GetItems().Where(s => s.ProjectId == LocalProject.Id).ToList();
+
+            LoadDaysFromSessions();
             DayTapped(DateTime.Today);
 
             BindingContext = this;
         }
 
-        public void LoadDays()
+
+        public void LoadDaysFromSessions()
         {
             Sessions = App.DBSessions.GetItems().Where(s => s.ProjectId == LocalProject.Id).ToList();
 
@@ -107,36 +114,54 @@ namespace tracker.Views
         public Dictionary<string, TimeSpan> GetDaysTotalTime()
         {
             var _daysTotalTime = new Dictionary<string, TimeSpan>();
-            foreach (var d in Days)
+
+            foreach (var d in DaysList)
             {
-                string day_string = d.Key.ToString("D");
+                string day_string = d.Date.ToString("D");
+                if (_daysTotalTime.ContainsKey(day_string)) continue;
 
-                if (!_daysTotalTime.ContainsKey(day_string))
-                {
-                    _daysTotalTime.Add(day_string, new TimeSpan(0, 0, 0));
-                }
-
-                foreach (Session s in d.Value)
-                {
-                    _daysTotalTime[day_string] += s.Duration;
-                }
+                _daysTotalTime.Add(day_string, d.Time);
             }
+
+            //foreach (var d in Days)
+            //{
+            //    string day_string = d.Key.ToString("D");
+
+            //    if (!_daysTotalTime.ContainsKey(day_string))
+            //    {
+            //        _daysTotalTime.Add(day_string, new TimeSpan(0, 0, 0));
+            //    }
+
+            //    foreach (Session s in d.Value)
+            //    {
+            //        _daysTotalTime[day_string] += s.Duration;
+            //    }
+            //}
             return _daysTotalTime;
         }
 
         private void DayTapped(DateTime date)
         {
             TimeSpan total = new TimeSpan();
-            if (Days.ContainsKey(date))
-                if (Days[date] != null)
+
+            foreach (var d in DaysList)
+            {
+                if (d.Date == date.Date)
                 {
-
-                    foreach (Session s in Days[date])
-                    {
-                        total += s.Duration;
-                    }
-
+                    total = d.Time;
+                    break;
                 }
+            }
+            //if (Days.ContainsKey(date))
+            //    if (Days[date] != null)
+            //    {
+
+            //        foreach (Session s in Days[date])
+            //        {
+            //            total += s.Duration;
+            //        }
+
+            //    }
 
             lblDay.Text = date.ToString("M") + ": " + string.Format("{0:D2}:{1:mm}:{1:ss}",
                                  (int)(total).TotalHours,

@@ -19,7 +19,10 @@ namespace tracker
         public const string PROJECTS_FILE = "projects.db";
         public const string WATCH_FILE = "watch.db";
         public const string SESSIONS_FILE = "sessions.db";
+        public const string DAYS_FILE = "days.db";
         public const string CSV_EXPORT_TMP_FILE = "export.csv";
+
+        public const int MAX_DAY_DURATION = 12;
 
         public const string SERVER_URL = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
         public const string SERVER_URL_POST = "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/upsert";
@@ -69,6 +72,22 @@ namespace tracker
                 return dbSessions;
             }
         }
+
+        public static RepositoryDays dbDays;
+        public static RepositoryDays DBDays
+        {
+            get
+            {
+                if (dbDays == null)
+                {
+                    dbDays = new RepositoryDays(
+                        Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DAYS_FILE));
+                }
+                return dbDays;
+            }
+        }
+
         public App()
         {
             InitializeComponent();
@@ -80,10 +99,10 @@ namespace tracker
 
         protected override void OnStart()
         {
-            if (Application.Current.Properties.ContainsKey("watchMode"))
+            /*if (Application.Current.Properties.ContainsKey("watchMode"))
             {
                 Application.Current.MainPage.Navigation.PushAsync(new WatchPage());
-            }
+            }*/
             //ResumeActive();
         }
 
