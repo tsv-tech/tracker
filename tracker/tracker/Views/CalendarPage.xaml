@@ -23,21 +23,23 @@
 			<controls:Calendar DayTappedCommand="{Binding DayTappedCommand}" Events="{Binding Days}">
 				<controls:Calendar.EventTemplate>
 					<DataTemplate>
-						<StackLayout Padding="10,10,10,0">
-							<StackLayout Orientation="Horizontal">
-								<Label FontSize="Large" Text="Start:" />
-								<Label FontAttributes="Bold" Text="{Binding GetStartTime}" />
-								<Label
-									FontAttributes="Bold"
-									FontSize="Large"
-									HorizontalOptions="EndAndExpand"
-									Text="{Binding GetDuration}" />
-							</StackLayout>
-							<StackLayout Padding="15,0,0,0" Orientation="Horizontal">
-								<Label Text="Stop:" />
-								<Label Text="{Binding GetStopTime}" />
+						<StackLayout Padding="10,15,10,0" Orientation="Horizontal">
+							<StackLayout>
+								<StackLayout Orientation="Horizontal">
+									<Label Text="Start:" />
+									<Label Text="{Binding GetStartTime}" />
 
+								</StackLayout>
+								<StackLayout Padding="20,0,0,0" Orientation="Horizontal">
+									<Label Text=" | Stop:" />
+									<Label Text="{Binding GetStopTime}" />
+								</StackLayout>
 							</StackLayout>
+							<Label
+								FontAttributes="Bold"
+								FontSize="Large"
+								HorizontalOptions="EndAndExpand"
+								Text="{Binding GetDuration}" />
 						</StackLayout>
 					</DataTemplate>
 				</controls:Calendar.EventTemplate>

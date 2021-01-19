@@ -15,6 +15,15 @@
 			<OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
 				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
 			</OnPlatform>
+
+			<Style TargetType="Button">
+				<Setter Property="BackgroundColor" Value="{StaticResource Key=primary-variant-color}" />
+				<Setter Property="TextColor" Value="White" />
+				<Setter Property="FontSize" Value="Small" />
+				<Setter Property="Padding" Value="4, 0, 4, 0" />
+				<Setter Property="BorderWidth" Value="2" />
+				<Setter Property="BorderColor" Value="{StaticResource Key=primary-variant-color}" />
+			</Style>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
@@ -60,56 +69,58 @@
 										<Label Text="Project Name" />
 										<Label
 											Margin="0,-10,0,0"
-											FontSize="30"
+											FontSize="25"
 											Text="{Binding Name}"
 											TextColor="{StaticResource Key=text-secondary-color}" />
 
-										<Label Margin="0,10,0,0" Text="Today Spent:" />
-										<StackLayout
-											Margin="0,-10,0,0"
-											Orientation="Horizontal"
-											Spacing="15">
-											<Label
-												FontAttributes="Bold"
-												FontSize="40"
-												Text="{Binding GetDayTime}"
-												TextColor="{StaticResource Key=text-primary-color}" />
-											<Label
-												Padding="-10,0,0,5"
-												FontAttributes="Bold"
-												FontSize="20"
-												Text="{Binding GetDaySeconds}"
-												TextColor="{StaticResource Key=text-primary-color}"
-												VerticalOptions="End" />
-											<ImageButton
-												BackgroundColor="Transparent"
-												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
-												CommandParameter="{Binding}"
-												HorizontalOptions="EndAndExpand"
-												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-												                   Glyph={x:Static tools:IconFont.ClockTimeEightOutline},
-												                   Color={StaticResource Key=primary-variant-color},
-												                   Size=40}" />
-										</StackLayout>
 
-										<Label Margin="0,10,0,0" Text="Time Spent" />
-										<StackLayout
-											Margin="0,-10,0,0"
-											Orientation="Horizontal"
-											Spacing="15">
+										<StackLayout Orientation="Horizontal">
+											<Label Margin="0,0,0,0" Text="Today's Time:" />
 											<Label
-												FontAttributes="Bold"
-												FontSize="40"
-												Text="{Binding GetTime}"
-												TextColor="{StaticResource Key=text-primary-color}" />
-											<Label
-												Padding="-10,0,0,5"
-												FontAttributes="Bold"
-												FontSize="20"
-												Text="{Binding GetSeconds}"
-												TextColor="{StaticResource Key=text-primary-color}"
-												VerticalOptions="End" />
-											<ImageButton
+												Margin="0,0,0,0"
+												HorizontalOptions="EndAndExpand"
+												Text="Total Time:" />
+										</StackLayout>
+										<StackLayout Margin="0,-6,0,0" Orientation="Horizontal">
+											<StackLayout
+												Margin="0,-10,0,0"
+												Orientation="Horizontal"
+												Spacing="15">
+												<Label
+													FontAttributes="Bold"
+													FontSize="40"
+													Text="{Binding GetDayTime}"
+													TextColor="{StaticResource Key=text-primary-color}" />
+												<Label
+													Margin="-10,0,0,5"
+													FontAttributes="Bold"
+													FontSize="20"
+													Text="{Binding GetDaySeconds}"
+													TextColor="{StaticResource Key=text-primary-color}"
+													VerticalOptions="End" />
+
+											</StackLayout>
+
+
+
+											<StackLayout
+												HorizontalOptions="EndAndExpand"
+												Orientation="Horizontal"
+												Spacing="15">
+												<Label
+													FontAttributes="Bold"
+													FontSize="Medium"
+													Text="{Binding GetTime}"
+													TextColor="{StaticResource Key=text-primary-color}"
+													VerticalOptions="StartAndExpand" />
+												<Label
+													Margin="-10,4,0,0"
+													FontAttributes="Bold"
+													FontSize="Micro"
+													Text="{Binding GetSeconds}"
+													TextColor="{StaticResource Key=text-primary-color}"
+													VerticalOptions="Start" />
+												<!--<ImageButton
 												BackgroundColor="Transparent"
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
@@ -125,17 +136,40 @@
 												Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
 												                   Glyph={x:Static tools:IconFont.FileDocumentEditOutline},
 												                   Color={StaticResource Key=primary-variant-color},
-												                   Size=40}" />
+												                   Size=40}" />-->
+											</StackLayout>
 										</StackLayout>
+										<FlexLayout
+											Margin="0,0,0,10"
+											FlowDirection="LeftToRight"
+											HeightRequest="35"
+											JustifyContent="SpaceBetween">
+											<Button
+												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
+												CommandParameter="{Binding}"
+												Text="Edit Today" />
+											<Button
+												BackgroundColor="White"
+												Command="{Binding Path=BindingContext.ManageProjectCommand, Source={x:Reference cpProjects}}"
+												CommandParameter="{Binding}"
+												Text="Manage Project"
+												TextColor="Black" />
+											<Button
+												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
+												CommandParameter="{Binding}"
+												Text="Edit Total" />
 
+										</FlexLayout>
 										<Button
 											BackgroundColor="{Binding GetColor}"
 											BorderColor="{StaticResource Key=primary-variant-color}"
 											BorderWidth="2"
 											Command="{Binding Path=BindingContext.ToggleTimerCommand, Source={x:Reference cpProjects}}"
 											CommandParameter="{Binding}"
-											CornerRadius="10"
-											Text="{Binding GetState}" />
+											FontSize="Medium"
+											Text="{Binding GetState}"
+											TextColor="{StaticResource Key=primary-variant-color}" />
+
 									</StackLayout>
 								</Frame>
 							</ViewCell>

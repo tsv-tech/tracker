@@ -113,6 +113,7 @@ namespace tracker
 
         protected override void OnResume()
         {
+            PROJECTS_VM.CheckDay();
             PROJECTS_VM.RecoverGlobalTimer();
         }
     }

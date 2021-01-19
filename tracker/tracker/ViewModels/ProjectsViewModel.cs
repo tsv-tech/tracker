@@ -397,7 +397,9 @@ namespace tracker.ViewModels
                 {
                     string result = await App.Current.MainPage.DisplayPromptAsync("Correct time",
                         "Enter desired hours (1-12) for last working Day",
-                        initialValue: "6", maxLength: 2, keyboard: Keyboard.Numeric);
+                        initialValue: "6", maxLength: 2, keyboard: Keyboard.Numeric, cancel:"", accept:"Accept");
+
+                    if (result == null) result = "0";
                     int hours = Convert.ToInt32( Double.Parse(result));
 
                     _day.Time = new TimeSpan(hours, 0, 0);

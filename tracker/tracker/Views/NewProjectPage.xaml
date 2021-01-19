@@ -24,9 +24,13 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
-				<Button Clicked="btnCreateClicked" Text="Create" />
+				<Button
+					BackgroundColor="LightGreen"
+					Clicked="btnCreateClicked"
+					Text="Create" />
 				<Button
 					Grid.Column="1"
+					BackgroundColor="LightCoral"
 					Clicked="btnCancelClicked"
 					Text="Cancel" />
 

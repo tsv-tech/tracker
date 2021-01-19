@@ -16,13 +16,27 @@
 				<On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
 			</OnPlatform>
 		</ResourceDictionary>
+
+		<Style TargetType="Entry">
+			<Setter Property="FontSize" Value="Small" />
+			<!--<Setter Property="HeightRequest" Value="40" />-->
+		</Style>
+		<Style TargetType="DatePicker">
+			<Setter Property="FontSize" Value="Small" />
+			<!--<Setter Property="HeightRequest" Value="40" />-->
+		</Style>
+		<Style TargetType="Label">
+			<Setter Property="HorizontalOptions" Value="Fill" />
+			<Setter Property="VerticalOptions" Value="Center" />
+			<Setter Property="FontSize" Value="Small" />
+		</Style>
 	</ContentPage.Resources>
 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Clicked="barShareClicked"
+			Clicked="barSaveClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.ShareVariantOutline},
+			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},
 			                            Color=White,
 			                            Size=40}"
 			Order="Primary"
@@ -36,15 +50,14 @@
 			Order="Primary"
 			Priority="0" />
 		<ToolbarItem
-			Clicked="barSaveClicked"
+			Clicked="barShareClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.ContentSaveOutline},
+			                            Glyph={x:Static tools:IconFont.ShareVariantOutline},
 			                            Color=White,
 			                            Size=40}"
 			Order="Primary"
 			Priority="0" />
 		<ToolbarItem
-			Clicked="barDeleteClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
 			                            Glyph={x:Static tools:IconFont.DeleteOutline},
 			                            Color=White,
@@ -56,8 +69,7 @@
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout>
-
-				<Grid Padding="10" RowSpacing="10">
+				<Grid Padding="10,0">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -117,26 +129,29 @@
 						Grid.Column="2"
 						Text="{Binding Comment}" />
 				</Grid>
-				<StackLayout Padding="10,0,0,0" Orientation="Horizontal">
-					<Button
-						Clicked="btnSendClicked"
-						Text="Send To Server"
-						VerticalOptions="Start" />
-					<ActivityIndicator x:Name="fetchIndicator" IsRunning="false" />
-					<Label
-						x:Name="fetchLabel"
-						Margin="10,0"
-						FontSize="Large"
-						Text=""
-						VerticalOptions="Center" />
 
-				</StackLayout>
 				<StackLayout Padding="10" Orientation="Horizontal">
 					<Label Text="Last sync: " TextColor="Green" />
 					<Label Margin="10,0,0,0" Text="{Binding GetLastSyncTime}" />
 					<Label Margin="20,0,0,0" Text="{Binding GetLastSyncDate}" />
 				</StackLayout>
+				<StackLayout Padding="10,0,0,0" Orientation="Horizontal">
+					<Button
+						BackgroundColor="LightGreen"
+						Clicked="btnSendClicked"
+						HeightRequest="40"
+						Text="Send To Server" />
+					<ActivityIndicator
+						x:Name="fetchIndicator"
+						HeightRequest="40"
+						IsRunning="false" />
+					<Label
+						x:Name="fetchLabel"
+						Margin="10,0"
+						Text=""
+						VerticalOptions="Center" />
 
+				</StackLayout>
 				<!--<ListView Margin="10"
                 ItemsSource="{Binding Sessions}"
                       HasUnevenRows="True">

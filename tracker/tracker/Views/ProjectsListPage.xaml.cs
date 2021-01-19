@@ -37,6 +37,7 @@ namespace tracker.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            App.PROJECTS_VM.CheckDay();
             App.PROJECTS_VM.RecoverGlobalTimer();
         }
 

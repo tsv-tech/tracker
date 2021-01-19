@@ -29,6 +29,10 @@
 				<Setter Property="BarBackgroundColor" Value="{StaticResource Key=primary-back-title-color}" />
 				<Setter Property="BarTextColor" Value="{StaticResource Key=primary-title-color}" />
 			</Style>
+
+			<Style TargetType="Button">
+				<Setter Property="BorderRadius" Value="10" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

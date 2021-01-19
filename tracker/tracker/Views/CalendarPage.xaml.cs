@@ -33,7 +33,7 @@ namespace tracker.Views
             InitializeComponent();
 
             Days = new EventCollection();
-            
+
             LocalProject = project;
             DaysList = App.DBDays.GetItems().Where(s => s.ProjectId == LocalProject.Id).ToList();
 
@@ -48,26 +48,26 @@ namespace tracker.Views
         {
             Sessions = App.DBSessions.GetItems().Where(s => s.ProjectId == LocalProject.Id).ToList();
 
-            if (Sessions.Count == 0)
+            if (DaysList.Count == 0)
                 return;
 
             List<Session> CurrentDaySessions;
 
-            foreach (var session in Sessions)
+            foreach (var day in DaysList)
             {
-                if (Days.ContainsKey(session.StartTime.Date))
+                if (Days.ContainsKey(day.Date))
                 {
                     continue;
                 }
-                else
+
+                CurrentDaySessions = Sessions.Where(s => s.StartTime.Date == day.Date).ToList();
+                if (CurrentDaySessions == null)
                 {
-                    CurrentDaySessions = Sessions.Where(s => s.StartTime.Date == session.StartTime.Date).ToList();
-                    CurrentDaySessions.Reverse();
-                    Days.Add(session.StartTime.Date, CurrentDaySessions);
+                    CurrentDaySessions = new List<Session>();
                 }
-
+                CurrentDaySessions.Reverse();
+                Days.Add(day.Date, CurrentDaySessions);
             }
-
         }
 
         private async Task ExportAndShare()
@@ -83,7 +83,8 @@ namespace tracker.Views
 
             var path = Path.Combine(FileSystem.CacheDirectory, App.CSV_EXPORT_TMP_FILE);
 
-            try { 
+            try
+            {
                 File.Delete(path);
             }
             catch { }
