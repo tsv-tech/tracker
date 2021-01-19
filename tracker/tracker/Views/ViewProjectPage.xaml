@@ -58,6 +58,7 @@
 			Order="Primary"
 			Priority="0" />
 		<ToolbarItem
+			Clicked="barDeleteClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
 			                            Glyph={x:Static tools:IconFont.DeleteOutline},
 			                            Color=White,
