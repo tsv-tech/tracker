@@ -8,11 +8,7 @@ using tracker.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
-using CsvHelper;
-using System.IO;
-using System.Globalization;
-using Xamarin.Essentials;
-using CsvHelper.Configuration;
+
 
 namespace tracker.Views
 {
@@ -20,7 +16,7 @@ namespace tracker.Views
     public partial class CalendarPage : ContentPage
     {
         public ICommand DayTappedCommand => new Command<DateTime>((date) => DayTapped(date));
-        public ICommand ExportTappedCommand => new Command(async () => await ExportAndShare());
+        public ICommand ExportTappedCommand => new Command(ExportAndShare);
         public EventCollection Days { get; set; }
 
         public List<Day> DaysList { get; set; }
@@ -59,63 +55,10 @@ namespace tracker.Views
             }
         }
 
-        private async Task ExportAndShare()
+        private async void ExportAndShare()
         {
-            if (Days.Count == 0)
-            {
-                await DisplayAlert("Export CSV", "This project doesn't have data to export yet", "OK");
-                return;
-            }
-            /*string path = Path.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                            , App.CSV_EXPORT_TMP_FILE);*/
-
-            var path = Path.Combine(FileSystem.CacheDirectory, App.CSV_EXPORT_TMP_FILE);
-
-            try
-            {
-                File.Delete(path);
-            }
-            catch { }
-
-            using (var writer = new StreamWriter(path))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.Configuration.RegisterClassMap<DayMap>();
-                csv.WriteRecords(GetDaysTotalTime());
-            }
-
-            await Share.RequestAsync(new ShareFileRequest
-            {
-                Title = "Send CSV",
-                File = new ShareFile(path)
-            });
+            await Navigation.PushAsync(new ExportPage(DaysList));
         }
-
-        public sealed class DayMap : ClassMap<KeyValuePair<string, TimeSpan>>
-        {
-            public DayMap()
-            {
-                Map(m => m.Key).Name("Date");
-                Map(m => m.Value).Name("Total time");
-            }
-        }
-
-        public Dictionary<string, TimeSpan> GetDaysTotalTime()
-        {
-            var _daysTotalTime = new Dictionary<string, TimeSpan>();
-
-            foreach (var d in DaysList)
-            {
-                string day_string = d.Date.ToString("D");
-                if (_daysTotalTime.ContainsKey(day_string)) continue;
-
-                _daysTotalTime.Add(day_string, d.Time);
-            }
-
-            return _daysTotalTime;
-        }
-
 
         private void DayTapped(DateTime date)
         {
