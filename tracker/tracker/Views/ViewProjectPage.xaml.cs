@@ -75,7 +75,7 @@ namespace tracker.Views
 
             Dictionary<string, string> contentRaw = new Dictionary<string, string>();
             contentRaw.Add("customId", LocalProject.CustomId);
-            contentRaw.Add("time", LocalProject.Time.ToString());
+            contentRaw.Add("time", (LocalProject.Time + LocalProject.Correction).ToString());
 
             //json - объект который "понимает" внешний сервер, т.е. здесь он создается из начального объекта, который
             //приводится в нужную форму
@@ -100,7 +100,7 @@ namespace tracker.Views
             {
                 fetchLabel.Text = "Sent!";
                 LocalProject.LastSyncDate = DateTime.Now;
-                LocalProject.LastSyncTime = LocalProject.Time;
+                LocalProject.LastSyncTime = LocalProject.Time + LocalProject.Correction;
 
                 MessagingCenter.Send<Project>(LocalProject, "MsgUpdateLastSyncProject");
             }
@@ -129,6 +129,22 @@ namespace tracker.Views
         private async void barCalendarClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CalendarPage(LocalProject));
+        }
+
+        private async void btnCorrectionClicked(object sender, EventArgs e)
+        {
+            string initial = LocalProject.Correction.TotalHours.ToString();
+
+            string result = await App.Current.MainPage.DisplayPromptAsync("Correct time",
+                        "Edit time correction what will be added to sending time",
+                        initialValue: initial, keyboard: Keyboard.Numeric, cancel: "Cancel", accept: "Accept");
+
+            if (result == null) return;
+
+            int hours = Convert.ToInt32(Double.Parse(result));
+
+            LocalProject.Correction = new TimeSpan(hours, 0, 0);
+            
         }
     }
 }

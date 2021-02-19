@@ -26,13 +26,9 @@
 						<StackLayout Padding="10,15,10,0" Orientation="Horizontal">
 							<StackLayout>
 								<StackLayout Orientation="Horizontal">
-									<Label Text="Start:" />
-									<Label Text="{Binding GetStartTime}" />
+									<Label FontSize="Large" Text="Time:" />
+									<Label FontSize="Large" Text="{Binding}" />
 
-								</StackLayout>
-								<StackLayout Padding="20,0,0,0" Orientation="Horizontal">
-									<Label Text=" | Stop:" />
-									<Label Text="{Binding GetStopTime}" />
 								</StackLayout>
 							</StackLayout>
 							<Label

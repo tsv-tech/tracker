@@ -143,21 +143,23 @@
 											Margin="0,0,0,10"
 											FlowDirection="LeftToRight"
 											HeightRequest="35"
-											JustifyContent="SpaceBetween">
+											JustifyContent="SpaceAround">
 											<Button
 												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
-												Text="Edit Today" />
+												Text="Edit Today"
+												WidthRequest="150" />
 											<Button
 												BackgroundColor="White"
 												Command="{Binding Path=BindingContext.ManageProjectCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
 												Text="Manage Project"
-												TextColor="Black" />
-											<Button
+												TextColor="Black"
+												WidthRequest="150" />
+											<!--<Button
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
-												Text="Edit Total" />
+												Text="Edit Total" />-->
 
 										</FlexLayout>
 										<Button

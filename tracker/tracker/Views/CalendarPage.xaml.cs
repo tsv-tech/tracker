@@ -25,7 +25,6 @@ namespace tracker.Views
 
         public List<Day> DaysList { get; set; }
 
-        public List<Session> Sessions { get; set; }
         public Project LocalProject { get; set; }
         public int DayTotalTime { get; set; }
         public CalendarPage(Project project)
@@ -46,12 +45,8 @@ namespace tracker.Views
 
         public void LoadDaysFromSessions()
         {
-            Sessions = App.DBSessions.GetItems().Where(s => s.ProjectId == LocalProject.Id).ToList();
-
             if (DaysList.Count == 0)
                 return;
-
-            List<Session> CurrentDaySessions;
 
             foreach (var day in DaysList)
             {
@@ -60,13 +55,7 @@ namespace tracker.Views
                     continue;
                 }
 
-                CurrentDaySessions = Sessions.Where(s => s.StartTime.Date == day.Date).ToList();
-                if (CurrentDaySessions == null)
-                {
-                    CurrentDaySessions = new List<Session>();
-                }
-                CurrentDaySessions.Reverse();
-                Days.Add(day.Date, CurrentDaySessions);
+                Days.Add(day.Date, new List<TimeSpan> { day.Time });
             }
         }
 
@@ -124,25 +113,13 @@ namespace tracker.Views
                 _daysTotalTime.Add(day_string, d.Time);
             }
 
-            //foreach (var d in Days)
-            //{
-            //    string day_string = d.Key.ToString("D");
-
-            //    if (!_daysTotalTime.ContainsKey(day_string))
-            //    {
-            //        _daysTotalTime.Add(day_string, new TimeSpan(0, 0, 0));
-            //    }
-
-            //    foreach (Session s in d.Value)
-            //    {
-            //        _daysTotalTime[day_string] += s.Duration;
-            //    }
-            //}
             return _daysTotalTime;
         }
 
+
         private void DayTapped(DateTime date)
         {
+            /*
             TimeSpan total = new TimeSpan();
 
             foreach (var d in DaysList)
@@ -153,20 +130,10 @@ namespace tracker.Views
                     break;
                 }
             }
-            //if (Days.ContainsKey(date))
-            //    if (Days[date] != null)
-            //    {
-
-            //        foreach (Session s in Days[date])
-            //        {
-            //            total += s.Duration;
-            //        }
-
-            //    }
 
             lblDay.Text = date.ToString("M") + ": " + string.Format("{0:D2}:{1:mm}:{1:ss}",
                                  (int)(total).TotalHours,
-                                 total);
+                                 total);*/
         }
     }
 }

@@ -130,7 +130,22 @@
 						Grid.Column="2"
 						Text="{Binding Comment}" />
 				</Grid>
-
+				<FlexLayout
+					Padding="10"
+					AlignItems="Center"
+					Direction="Row"
+					JustifyContent="Start">
+					<Label FontSize="Medium" Text="Correction: " />
+					<Button
+						Padding="0,0,0,0"
+						BackgroundColor="Transparent"
+						Clicked="btnCorrectionClicked"
+						FontSize="Medium"
+						HeightRequest="35"
+						Text="{Binding GetCorrection}"
+						WidthRequest="50" />
+					<Label FontSize="Medium" Text="h" />
+				</FlexLayout>
 				<StackLayout Padding="10" Orientation="Horizontal">
 					<Label Text="Last sync: " TextColor="Green" />
 					<Label Margin="10,0,0,0" Text="{Binding GetLastSyncTime}" />

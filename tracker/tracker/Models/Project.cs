@@ -36,6 +36,9 @@ namespace tracker.Models
 
             this.DayTime = p.DayTime;
             this.CurrentDayId = p.CurrentDayId;
+            this.SessionStartTime = p.SessionStartTime;
+
+            this.Correction = p.Correction;
         }
         public Project()
         {
@@ -84,7 +87,7 @@ namespace tracker.Models
             }
         }
 
-        public DateTime SessionStartTime { get; set; }
+        public DateTime SessionStartTime { get; set; } = DateTime.Today;
 
         TimeSpan sessionTime = new TimeSpan(0, 0, 0);
         public TimeSpan SessionTime
@@ -221,20 +224,7 @@ namespace tracker.Models
                 SetProperty(ref isBusy, value);
             }
         }
-        /*
-        [Ignore]
-        public ObservableRangeCollection<Session> Sessions
-        {
-            get
-            {
-                var sessions = new ObservableRangeCollection<Session>();
-                IEnumerable<Session> allSessions = App.DBSessions.GetItems();
-                var range = allSessions.Where(s => s.ProjectId == this.Id);
-                sessions.AddRange(range);
-                return sessions;
-            }
-        }
-        */
+       
         #endregion END_PROPERTIES
 
         #region TIMERS & SESSIONS
@@ -324,6 +314,7 @@ namespace tracker.Models
                 OnPropertyChanged(nameof(CurrentDayId));
             }
         }
+
         TimeSpan dayTime = new TimeSpan(0, 0, 0);
         public TimeSpan DayTime
         {
@@ -333,8 +324,9 @@ namespace tracker.Models
                 if (value == dayTime)
                     return;
                 dayTime = value;
-                OnPropertyChanged(nameof(GetDayTime));
                 OnPropertyChanged(nameof(DayTime));
+                OnPropertyChanged(nameof(GetDayTime));
+                OnPropertyChanged(nameof(GetDaySeconds));
             }
         }
         [Ignore]
@@ -369,6 +361,33 @@ namespace tracker.Models
                      DayTime);
             }
         }
+        #endregion
+
+
+        #region CORRECTION - timespan which would be added to TotalTime when sending to server
+        TimeSpan correction = new TimeSpan(0, 0, 0);
+        public TimeSpan Correction
+        {
+            get { return correction; }
+            set
+            {
+                if (value == correction)
+                    return;
+                correction = value;
+                OnPropertyChanged(nameof(Correction));
+                OnPropertyChanged(nameof(GetCorrection));
+            }
+        }
+        [Ignore]
+        public string GetCorrection
+        {
+            get
+            {
+                 return string.Format("{00}",
+                  (int)Correction.TotalHours);
+            }
+        }
+
         #endregion
     }
 }

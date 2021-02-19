@@ -266,11 +266,6 @@ namespace tracker.ViewModels
                 project.Time += project.SessionTime;
                 project.DayTime += project.SessionTime;
 
-                App.DBSessions.SaveItem(new Session(project.Id, project.SessionStartTime,
-                    project.SessionStartTime + project.SessionTime, project.SessionTime)
-
-                );
-
                 App.DBProjects.SaveItem(project);
 
                 SaveDay2(project);
@@ -301,8 +296,13 @@ namespace tracker.ViewModels
                     p.Payment = project.Payment;
                     p.Comment = project.Comment;
                     p.Time = project.Time;
+                    p.DayTime = project.DayTime;
                     p.DateCreated = project.DateCreated;
                     p.Currency = project.Currency;
+
+                    p.SessionStartTime = project.SessionStartTime;
+                    p.Correction = project.Correction;
+
                     App.DBProjects.SaveItem(p);
                     break;
                 }
@@ -362,6 +362,7 @@ namespace tracker.ViewModels
                     */
                     //Reset DayTime so this won't trigger again untill project touched
                     p.DayTime = new TimeSpan(0,0,0);
+                    p.SessionStartTime = DateTime.Now.Date;
                     App.DBProjects.SaveItem(p);
                 }
             }
@@ -458,6 +459,10 @@ namespace tracker.ViewModels
             foreach (var p in Projects)
                 if (p.Id == project.Id)
                 {
+                    if (p.CurrentDayId == 0)
+                    {
+                        p.CurrentDayId = App.DBDays.SaveItem(new Day(p.Id, DateTime.Today, p.DayTime));
+                    }
                     p.DayTime = project.DayTime;
                     p.Time = project.Time;
 
