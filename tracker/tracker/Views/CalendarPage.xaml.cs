@@ -51,8 +51,15 @@ namespace tracker.Views
                     continue;
                 }
 
-                Days.Add(day.Date, new List<TimeSpan> { day.Time });
+                Days.Add(day.Date, new List<string> { FormatDayTime(day.Time) });
             }
+        }
+
+        private string FormatDayTime (TimeSpan time)
+        {
+            return string.Format("{0}:{1:mm}",
+                     (int)time.TotalHours,
+                     time);
         }
 
         private async void ExportAndShare()
