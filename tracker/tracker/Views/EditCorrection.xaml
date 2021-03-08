@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	x:Class="tracker.Views.EditCorrection"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	Title="Correction">
+	<ContentPage.Content>
+		<Grid Padding="12">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Label HorizontalOptions="End" Text="Hours:" />
+			<Entry
+				Grid.Row="1"
+				FontSize="Large"
+				HorizontalOptions="End"
+				Keyboard="Numeric"
+				Placeholder="Hours"
+				Text="{Binding Hours, StringFormat='{0:D2}'}" />
+
+			<Label
+				Grid.Column="1"
+				HorizontalOptions="Start"
+				Text="Minutes:" />
+			<Entry
+				Grid.Row="1"
+				Grid.Column="1"
+				FontSize="Large"
+				HorizontalOptions="Start"
+				Keyboard="Numeric"
+				Placeholder="Minutes"
+				Text="{Binding Minutes, StringFormat='{0:D2}'}" />
+			<Label
+				x:Name="errMinutes"
+				Grid.Row="2"
+				Grid.Column="1"
+				IsVisible="false"
+				Text="Minuts must be 0 - 59"
+				TextColor="Red" />
+			<Label
+				Grid.Row="3"
+				Grid.Column="0"
+				HorizontalOptions="End"
+				IsVisible="False"
+				Text="Negative:"
+				VerticalOptions="Center" />
+			<CheckBox
+				Grid.Row="3"
+				Grid.Column="1"
+				IsChecked="{Binding IsNegative}"
+				IsVisible="False"
+				VerticalOptions="Center" />
+			<Button
+				Grid.Row="4"
+				Grid.Column="0"
+				BackgroundColor="LightGreen"
+				Clicked="btnApplyClicked"
+				Text="Apply" />
+			<Button
+				Grid.Row="4"
+				Grid.Column="1"
+				BackgroundColor="LightCoral"
+				Clicked="btCancelClicked"
+				Text="Cancel" />
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

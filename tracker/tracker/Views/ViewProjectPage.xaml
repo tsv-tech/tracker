@@ -136,15 +136,20 @@
 					Direction="Row"
 					JustifyContent="Start">
 					<Label FontSize="Medium" Text="Correction: " />
-					<Button
-						Padding="0,0,0,0"
+					<Label
+						Margin="10,0,0,0"
+						FontSize="Medium"
+						Text="{Binding GetCorrection}"
+						TextColor="Black" />
+					<ImageButton
+						Margin="10,0,0,0"
 						BackgroundColor="Transparent"
 						Clicked="btnCorrectionClicked"
-						FontSize="Medium"
-						HeightRequest="35"
-						Text="{Binding GetCorrection}"
-						WidthRequest="50" />
-					<Label FontSize="Medium" Text="h" />
+						Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+						                   Glyph={x:Static tools:IconFont.FileDocumentEditOutline},
+						                   Color=Black,
+						                   Size=Large}" />
+
 				</FlexLayout>
 				<StackLayout Padding="10" Orientation="Horizontal">
 					<Label Text="Last sync: " TextColor="Green" />

@@ -98,10 +98,7 @@
 													Text="{Binding GetDaySeconds}"
 													TextColor="{StaticResource Key=text-primary-color}"
 													VerticalOptions="End" />
-
 											</StackLayout>
-
-
 
 											<StackLayout
 												HorizontalOptions="EndAndExpand"
@@ -143,12 +140,13 @@
 											Margin="0,0,0,10"
 											FlowDirection="LeftToRight"
 											HeightRequest="35"
-											JustifyContent="SpaceAround">
+											JustifyContent="End">
 											<Button
 												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
 												Text="Edit Time" />
 											<Button
+												Margin="14,0,0,0"
 												BackgroundColor="White"
 												Command="{Binding Path=BindingContext.ManageProjectCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"

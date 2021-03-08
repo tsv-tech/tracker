@@ -57,7 +57,7 @@ namespace tracker.Views
 
         private string FormatDayTime (TimeSpan time)
         {
-            return string.Format("{0}:{1:mm}",
+            return string.Format("{0}h {1:mm}m",
                      (int)time.TotalHours,
                      time);
         }

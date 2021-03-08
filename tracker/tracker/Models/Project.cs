@@ -383,8 +383,9 @@ namespace tracker.Models
         {
             get
             {
-                 return string.Format("{00}",
-                  (int)Correction.TotalHours);
+                return string.Format("{0}h {1:mm}m",
+                    (int)Correction.TotalHours,
+                    Correction);
             }
         }
 

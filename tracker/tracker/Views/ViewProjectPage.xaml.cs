@@ -93,8 +93,6 @@ namespace tracker.Views
 
             fetchIndicator.IsRunning = false;
             fetchIndicator.IsVisible = false;
-            /* проверка ответа от сервера: если все сработало - то выполняется показ страницы (данная страница тестовая, поэтому
-             * пока не обращаем внимания*/
             
             if (response.IsSuccessStatusCode)
             {
@@ -131,20 +129,25 @@ namespace tracker.Views
             await Navigation.PushAsync(new CalendarPage(LocalProject));
         }
 
+        //private async void btnCorrectionClicked(object sender, EventArgs e)
+        //{
+        //    string initial = LocalProject.Correction.TotalHours.ToString();
+
+        //    string result = await App.Current.MainPage.DisplayPromptAsync("Correct time",
+        //                "Edit time correction what will be added to sending time",
+        //                initialValue: initial, keyboard: Keyboard.Numeric, cancel: "Cancel", accept: "Accept");
+
+        //    if (result == null) return;
+
+        //    int hours = Convert.ToInt32(Double.Parse(result));
+
+        //    LocalProject.Correction = new TimeSpan(hours, 0, 0);
+
+        //}
+
         private async void btnCorrectionClicked(object sender, EventArgs e)
         {
-            string initial = LocalProject.Correction.TotalHours.ToString();
-
-            string result = await App.Current.MainPage.DisplayPromptAsync("Correct time",
-                        "Edit time correction what will be added to sending time",
-                        initialValue: initial, keyboard: Keyboard.Numeric, cancel: "Cancel", accept: "Accept");
-
-            if (result == null) return;
-
-            int hours = Convert.ToInt32(Double.Parse(result));
-
-            LocalProject.Correction = new TimeSpan(hours, 0, 0);
-            
+            await Navigation.PushAsync(new EditCorrection(LocalProject));
         }
     }
 }
