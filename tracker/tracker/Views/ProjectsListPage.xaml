@@ -147,15 +147,13 @@
 											<Button
 												Command="{Binding Path=BindingContext.EditDayTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
-												Text="Edit Today"
-												WidthRequest="150" />
+												Text="Edit Time" />
 											<Button
 												BackgroundColor="White"
 												Command="{Binding Path=BindingContext.ManageProjectCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
-												Text="Manage Project"
-												TextColor="Black"
-												WidthRequest="150" />
+												Text="Manage"
+												TextColor="Black" />
 											<!--<Button
 												Command="{Binding Path=BindingContext.EditTimeCommand, Source={x:Reference cpProjects}}"
 												CommandParameter="{Binding}"
