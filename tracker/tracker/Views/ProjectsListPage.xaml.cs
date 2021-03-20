@@ -31,7 +31,8 @@ namespace tracker.Views
 
         private async void btnSettingsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SettingsPage());
+            //await Navigation.PushAsync(new SettingsPage());
+            await Navigation.PushAsync(new AboutPage());
         }
 
         protected override void OnAppearing()

@@ -24,8 +24,8 @@ namespace tracker
 
         public const int MAX_DAY_DURATION = 12;
 
-        public const string SERVER_URL = "https://us-central1-joseph-stalin.cloudfunctions.net/app/api/read/";
-        public const string SERVER_URL_POST = "https://us-central1-joseph-stalin.cloudfunctions.net/app/api/upsert";
+        public const string SERVER_URL = "https://us-central1-time-app-pi.cloudfunctions.net/app/api/read";
+        public const string SERVER_URL_POST = "https://us-central1-time-app-pi.cloudfunctions.net/app/api/upsert";
 
         public static Repository dbProjects;
         public static Repository DBProjects

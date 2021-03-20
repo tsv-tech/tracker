@@ -39,7 +39,7 @@
 		<ToolbarItem
 			Clicked="btnSettingsClicked"
 			IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-			                            Glyph={x:Static tools:IconFont.FileCogOutline},
+			                            Glyph={x:Static tools:IconFont.Information},
 			                            Color=White,
 			                            Size=40}"
 			Order="Primary"
