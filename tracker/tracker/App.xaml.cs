@@ -27,6 +27,8 @@ namespace tracker
         public const string SERVER_URL = "https://us-central1-time-app-pi.cloudfunctions.net/app/api/read";
         public const string SERVER_URL_POST = "https://us-central1-time-app-pi.cloudfunctions.net/app/api/upsert";
 
+        public const string FULL_VERSION_LINK = "https://play.google.com/store/apps/details?id=com.pi.engineering.tracker_A";
+
         public static Repository dbProjects;
         public static Repository DBProjects
         {

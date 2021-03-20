@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="3" android:versionName="Alpha Release 1.3" package="com.pi.engineering.tracker" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="5" android:versionName="Release 1.0" package="com.pi.engineering.tracker" android:installLocation="preferExternal">
 	<uses-sdk android:minSdkVersion="22" android:targetSdkVersion="29" />
 	<application android:label="TimeTracker"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

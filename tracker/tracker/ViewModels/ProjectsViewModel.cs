@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using tracker.Models;
 using tracker.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace tracker.ViewModels
@@ -126,6 +127,17 @@ namespace tracker.ViewModels
 
         public async void CreateProject()
         {
+            if (Projects.Count >= 1)
+            {
+                bool answer = await Application.Current.MainPage.DisplayAlert("Maximum projects reached", "Demo version is limited to 1 project, try our" +
+                    "full version", "GET FULL", "BACK");
+                if (answer)
+                {
+                    await Browser.OpenAsync(App.FULL_VERSION_LINK, BrowserLaunchMode.SystemPreferred);
+                }
+                return;
+            }
+
             await Navigation.PushAsync(new NewProjectPage(new Project()));
         }
 
